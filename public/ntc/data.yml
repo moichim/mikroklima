@@ -1,0 +1,49 @@
+schema:
+  radiance_direct:
+    name: "Sluneční svit kolmý"
+    description: "Sluneční svit měřený snímačem, který je položený na zemi směrem přímo k nebi."
+    color: "blue"
+    id: 1
+    in: 
+      - radiance
+
+  radiance_angular:
+    name: "Sluneční svit natočený"
+    description: "Sluneční svit měřený snímačem namířeným přímo na Slunce."
+    color: "brown"
+    id: 2
+    in:
+      - radiance
+
+values:
+  2023-11-20 14:00:
+    radiance_direct: 35
+    radiance_angular: 53
+  2023-11-22 14:00:
+    radiance_direct: 15.6
+    radiance_angular: 15.7
+  2023-11-24 14:00:
+    radiance_direct: 48.5
+    radiance_angular: 57.1
+  2023-11-29 10:00:
+    radiance_direct: 58.8
+    radiance_angular: 62.2
+    note: "je sníh, asi je to letos poprvé"
+  2023-11-29 14:00:
+    radiance_direct: 111
+    radiance_angular: 171.2
+  2023-12-01 10:00:
+    radiance_direct: 28.7
+    radiance_angular: 29.9
+    note: "mokrý déšť, 5-10 cm sněhu"
+  2023-12-04 10:00:
+    radiance_direct: 9.2
+    radiance_angular: 10.1
+    note: "hodně sněží"
+  2023-12-06 10:00:
+    radiance_direct: 70
+    radiance_angular: 74.6
+  2023-12-06 14:00:
+    radiance_direct: 15.5
+    radiance_angular: 16
+    
