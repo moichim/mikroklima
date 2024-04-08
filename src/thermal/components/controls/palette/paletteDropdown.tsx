@@ -3,7 +3,9 @@
 import { useThermalObjectPurpose } from "@/thermal/context/useThermalObjectPurpose";
 import { ThermalRegistry } from "@/thermal/registry/ThermalRegistry";
 import { useThermalRegistryPaletteDrive } from "@/thermal/registry/properties/drives/palette/useThermalRegistryPaletteDrive";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownProps, DropdownTrigger, cn } from "@nextui-org/react";
+import { useThermalRegistryLoadingState } from "@/thermal/registry/properties/states/loading/useThermalRegistryLoadingState";
+import { useThermalRegistryMinmaxState } from "@/thermal/registry/properties/states/minmax/registry/useThermalRegistryMinmaxState";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownProps, DropdownTrigger, Spinner, cn } from "@nextui-org/react";
 import { useMemo } from "react";
 
 type PaletteControlProps = {
@@ -18,6 +20,19 @@ export const PaletteDropdown: React.FC<PaletteControlProps> = ({
     const ID = useThermalObjectPurpose( registry, "paletteDropdown" );
 
     const palette = useThermalRegistryPaletteDrive(registry, ID);
+
+    const { value: loading } = useThermalRegistryLoadingState(registry, ID);
+
+    const { value: minmax } = useThermalRegistryMinmaxState(registry, ID);
+
+    if (loading === true || minmax === undefined) {
+        return <div
+            className={cn("border-2 border-gray-300 border-dashed p-3 rounded-xl text-primary-500 gap-4 flex")}
+        >
+            <Spinner size="sm" />
+            <span>Barevné palety</span>
+        </div>
+    }
 
     return <Dropdown
         {...props}

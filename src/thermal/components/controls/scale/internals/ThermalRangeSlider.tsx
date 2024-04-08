@@ -178,9 +178,9 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
 
     // If loading
     if (minmax === undefined) {
-        return <div className="flex-grow flex gap-4 items-center text-primary h-full">
+        return <div className="flex-grow flex gap-4 items-center text-primary h-full border-2 border-gray-300 border-dashed rounded-xl p-4">
             <Spinner size="sm" />
-            <span>Zpracovávám teplotní škálu</span>
+            <span>Teplotní škála</span>
         </div>
     }
 
