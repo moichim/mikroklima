@@ -1,5 +1,7 @@
 # Mikroklima ve vaší obci
 
+WIP migrating to gitlab
+
 Aplikace v [Next.js](https://nextjs.org) vizualizující meteorologická data nasbíraná v rámci vzdělávacích projektů NTC ZČU v Plzni.
 
 - studentské týmy jsou vybaveny termokamerami, meteostanicemi a měřiči slunečního svitu
