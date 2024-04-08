@@ -1,6 +1,6 @@
 import { ThermalGroup } from "../registry/ThermalGroup";
 import { ThermalCursorPositionOrundefined, ThermalRangeOrUndefined } from "../registry/interfaces";
-import { IThermalInstance } from "../registry/interfaces/interfaces";
+import { IThermalInstance } from "../registry/interfaces";
 import { CursorValueDrive } from "../registry/properties/states/cursorValue/CursorValueDrive";
 import { ThermalFileSource } from "./ThermalFileSource";
 import { VisibleLayer } from "./instanceUtils/VisibleLayer";

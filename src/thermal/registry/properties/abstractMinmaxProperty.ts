@@ -1,8 +1,7 @@
 import { ThermalGroup } from "../ThermalGroup";
 import { ThermalRegistry } from "../ThermalRegistry";
 import { ThermalMinmaxOrUndefined } from "../interfaces";
-import { IThermalContainer } from "../interfaces/interfaces";
-import { AbstractProperty, IBaseProperty } from "./abstractProperty"
+import { AbstractProperty } from "./abstractProperty";
 
 
 /** 
