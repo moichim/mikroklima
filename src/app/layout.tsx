@@ -34,8 +34,8 @@ export default function RootLayout({
               <Navbar
                 brandContent={<Link href="/" color="foreground" className="font-bold hover:text-primary">LabIR Edu Mikroklima</Link>}
                 endContent={<>
-                  <Link href="https://github.com/moichim/weather" isBlock color="primary" isExternal showAnchorIcon size='sm' className="hidden md:flex">Github</Link>
-                  <Link href="" isBlock color="primary" isExternal showAnchorIcon size='sm'>Discord</Link>
+                  <Link href="https://github.com/moichim/mikroklima" isBlock color="primary" isExternal showAnchorIcon size='sm' className="hidden md:flex">Github</Link>
+                  {/* <Link href="" isBlock color="primary" isExternal showAnchorIcon size='sm'>Discord</Link> */}
                 </>}
                 links={[
                   {

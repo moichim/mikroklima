@@ -68,21 +68,18 @@ export const ThermalAbout: React.FC = () => {
                                     <ul className="list-disc ml-4">
                                         <li><strong>Jádro v čistém TypeScriptu</strong>
                                             <ul className="list-disc ml-8">
-                                                <li><Code>ThermalRegistry</Code> cachuje načtené soubory a umožňuje hromadně nastavovat skupiny</li>
-                                                <li><Code>ThermalGroup</Code> ovládá jednu skupinu snímků</li>
+                                                <li><Code>ThermalManager</Code> cachuje načtené soubory a obsluhuje jednotlívé registry.</li>
+                                                <li><Code>ThermalRegistry</Code> představuje základní kontext pro zobrazení termogramů. Ty jsou zobrazovány ve skupinách a parametry zobrazení jsou kontrolovány hromadně z 1 místa.</li>
+                                                <li><Code>ThermalGroup</Code> obsahuje jednotlivé obrázky a synchronizuje jejich kurzor.</li>
                                                 <li><Code>ThermalFileInstance</Code> vykresluje snímek a obsluhuje uživatelské interakce</li>
-                                                <li>Registr, skupina a instance mají parametry jako je teplotní škála, rozsah či průhlednost.</li>
-                                                <li>Parametry jsou synchronizovány napříč skupinami a instancemi.</li>
-                                                <li>Změna parametrů je emitována ven jako JS <Code>Event</Code>.</li>
+                                                <li>Klíčovou třídou pro načítání a ovládání termogramů je <Code>ThermalRegistry</Code>. React může přidat vlastní listenery na změny hodnot registru (teplotní škála, průhledonst aj.)</li>
                                             </ul>
                                         </li>
                                         <li><strong>UI v Reactu</strong>
                                             <ul className="list-disc ml-8">
-                                                <li>Globální instance <Code>ThermalRegistry</Code> je držena v kontextu.</li>
+                                                <li>Globální instance <Code>ThermalManager</Code> je držena v kontextu.</li>
                                                 <li>React se stará o veškeré vykreslování.</li>
                                                 <li>Komponenty mohou přidat své event listenery k registru, skupině či instanci.</li>
-                                                <li>Díky event listenerům je možné zrcadlit stav jádra v Reactu.</li>
-                                                <li>Parametry jádra je možné nastavovat z Reactovského UI.</li>
                                             </ul>
                                         </li>
                                         <li><strong>Infrastruktura v Next.js</strong>
