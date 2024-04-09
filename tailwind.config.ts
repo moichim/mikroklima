@@ -5,6 +5,7 @@ import colors from 'tailwindcss/colors';
 
 const config: Config = {
   content: [
+    './src/modules/**/*.{js,ts,jsx,tsx,mdx}',
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/state/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
