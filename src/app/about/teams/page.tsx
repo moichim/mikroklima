@@ -1,6 +1,6 @@
 import { ContentContainer } from '@/components/content/ui/contentContainer';
-import { ScopeMap } from '@/components/scope/scopeMap';
-import { ScopeSelectScreen } from '@/components/scope/scopeSelectScreen';
+import { ScopeMap } from '@/modules/scope/components/scopeMap';
+import { ScopeSelectScreen } from '@/modules/scope/components/scopeSelectScreen';
 import { googleSheetsProvider } from '@/graphql/google/googleProvider/googleProvider';
 
 export default async function Home() {

@@ -2,7 +2,7 @@ import { fetchWeatherApi } from "openmeteo";
 import { WeatherSerie, WeatherEntryType, WeatherProviderRequest } from "../weather";
 import { AbstractWeatherProvider, IProvider } from "./abstractProvider";
 import { Sources, WeatherSourceType } from "../definitions/source";
-import { MeteoRequestType } from "@/state/data/processors/query";
+import { MeteoRequestType } from "@/modules/meteo/processors/query";
 import { stringFromTimestamp } from "@/utils/time";
 import { subDays } from "date-fns";
 

@@ -1,8 +1,7 @@
 import { scopeProvider } from "@/graphql/scope/ScopeProvider";
-import { GraphGrid } from "@/state/data/components/GraphGrid";
-import { GraphContextProvider } from "@/state/graph/graphContext";
+import { GraphContextProvider } from "@/modules/graph/graphContext";
+import { GraphGrid } from "@/modules/meteo/components/GraphGrid";
 import { TimeController } from "@/thermal/components/controllers/timeController";
-import { filesProvider } from "@/thermal/graphql/filesProvider";
 import { addHours, subDays } from "date-fns";
 
 

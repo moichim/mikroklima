@@ -1,11 +1,10 @@
-import { Navbar } from "@/components/navigation/utils/Navbar";
-import { ScopeDropdownMenu } from "@/components/scope/scopeDropdownMenu";
+import { Navbar } from "@/components/ui/navigation/Navbar";
 import { scopeProvider } from "@/graphql/scope/ScopeProvider";
-import { ScopeContextProvider } from "@/state/scope/scopeContext";
-import { FromControl } from "@/state/time/components/controls/fromControl";
-import { ToControl } from "@/state/time/components/controls/toControl";
-import { PresetDropdown } from "@/state/time/components/presetDropdown";
-import { TimeContextProvider } from "@/state/time/timeContext";
+import { ScopeDropdownMenu } from "@/modules/scope/components/scopeDropdownMenu";
+import { ScopeContextProvider } from "@/modules/scope/scopeContext";
+import { TimeFromControl } from "@/modules/time/components/controls/timeFromControl";
+import { TimePresetDropdown } from "@/modules/time/components/timePresetDropdown";
+import { TimeContextProvider } from "@/modules/time/timeContext";
 import { Dropdown, DropdownTrigger } from "@nextui-org/react";
 import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -74,11 +73,11 @@ const ScopeLayout = async ({ ...props }) => {
                 }}
             >
                 <div className="flex gap-0 items-center group">
-                    <FromControl />
+                    <TimeFromControl />
                     <div className="h-[2px] bg-gray-300 w-3 group-hover:bg-primary-300"></div>
-                    <ToControl />
+                    <TimeFromControl />
                 </div>
-                <PresetDropdown />
+                <TimePresetDropdown />
             </Navbar>
 
             <main className="w-full min-h-screen bg-gray-200 pb-[10rem]">

@@ -1,6 +1,6 @@
 import { googleSheetsProvider } from "@/graphql/google/googleProvider/googleProvider";
-import { GraphGrid } from "@/state/data/components/GraphGrid";
-import { GraphContextProvider } from "@/state/graph/graphContext";
+import { GraphGrid } from "@/modules/meteo/components/GraphGrid";
+import { GraphContextProvider } from "@/modules/graph/graphContext";
 import { getMetadataPublisher, getMetadataTitle } from "@/utils/metadata";
 import { Metadata, ResolvingMetadata } from "next";
 import { ScopePageProps } from "../layout";

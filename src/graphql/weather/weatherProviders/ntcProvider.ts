@@ -3,7 +3,7 @@ import { dateFromString } from "@/utils/time";
 import { WeatherSerie, WeatherEntryDataType, WeatherEntryType, WeatherProviderRequest } from "../weather";
 import { Sources, WeatherSourceType } from "../definitions/source";
 import { AbstractWeatherProvider, IProvider } from "./abstractProvider";
-import { MeteoRequestType } from "@/state/data/processors/query";
+import { MeteoRequestType } from "@/modules/meteo/processors/query";
 
 type NtcResponseEntryType = {
     id: number,

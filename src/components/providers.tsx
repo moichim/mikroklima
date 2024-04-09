@@ -1,7 +1,7 @@
 'use client'
 
-import { NotificationsContextProvider } from "@/state/notifications/useNotifications"
-import { ScopeContextProvider } from "@/state/scope/scopeContext"
+import { NotificationsContextProvider } from "@/modules/notifications/useNotifications"
+import { ScopeContextProvider } from "@/modules/scope/scopeContext"
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"
 import { NextUIProvider } from "@nextui-org/react"
 import React from "react"

@@ -1,4 +1,4 @@
-import { MeteoRequestType } from "@/state/data/processors/query";
+import { MeteoRequestType } from "@/modules/meteo/processors/query";
 import gql from "graphql-tag";
 import { GoogleColumnStats, GoogleRequest } from "../google/google";
 import { Properties } from "./definitions/properties";

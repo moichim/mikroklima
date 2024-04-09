@@ -1,6 +1,6 @@
 import { ContentContainer } from '@/components/content/ui/contentContainer';
-import { ScopeCard } from '@/components/scope/scopeCard';
-import { ScopeMap } from '@/components/scope/scopeMap';
+import { ScopeCard } from '@/modules/scope/components/scopeCard';
+import { ScopeMap } from '@/modules/scope/components/scopeMap';
 import { googleSheetsProvider } from '@/graphql/google/googleProvider/googleProvider';
 import { Button, Link } from '@nextui-org/react';
 

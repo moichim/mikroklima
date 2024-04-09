@@ -2,7 +2,7 @@ import { googleResolvers, googleTypeDefs } from "@/graphql/google/google";
 import { integratedResolvers, integratedTypeDefs } from "@/graphql/integratedRoutes";
 import { scopeResolvers, scopesTypeDefs } from "@/graphql/scope/scope";
 import { weatherResolvers, weatherTypeDefs } from "@/graphql/weather/weather";
-import { fileResolvers, fileTypeDefs } from "@/thermal/graphql/files";
+import { fileResolvers, fileTypeDefs } from "@/modules/thermal/graphql/files";
 import { ApolloServer } from "@apollo/server";
 import { buildSubgraphSchema } from "@apollo/subgraph";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
