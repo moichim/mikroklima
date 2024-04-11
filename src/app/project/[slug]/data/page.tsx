@@ -4,6 +4,8 @@ import { GraphContextProvider } from "@/modules/graph/graphContext";
 import { getMetadataPublisher, getMetadataTitle } from "@/utils/metadata";
 import { Metadata, ResolvingMetadata } from "next";
 import { ScopePageProps } from "../layout";
+import { Graph } from "@/modules/graph/components/Graph";
+import { scopeProvider } from "@/graphql/scope/ScopeProvider";
 
 export const generateStaticParams = async () => {
 
@@ -30,10 +32,16 @@ export async function generateMetadata(
 
 const ScopePage = async (props: ScopePageProps) => {
 
-    const scope = await googleSheetsProvider.fetchScopeDefinition(props.params.slug);
+    const scope = await scopeProvider.fetchScopeDefinition(props.params.slug);
 
     return <GraphContextProvider>
-        <GraphGrid scope={scope}/>
+        {/* <GraphGrid scope={scope}/> */}
+        <Graph 
+            scope={scope} 
+            from={1707567048 * 1000}
+            to={1712753533 * 1000}
+            defaultGraphs={["temperature", "humidity"]}
+        /> 
     </GraphContextProvider>
 }
 

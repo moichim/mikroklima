@@ -4,11 +4,15 @@ import { Button, Tooltip } from "@nextui-org/react";
 import { TimeFormat } from "../../../utils/timeUtils/formatting";
 import { useTimeContext } from "../timeContext";
 import { CloseIcon, ZoomInIcon } from "@/components/ui/icons";
-import { TimeEventsFactory, TimePeriod } from "../reducerInternals/actions";
+import { TimeEventsFactory, TimeEventsType, TimePeriod } from "../reducerInternals/actions";
 import { formatDuration, intervalToDuration } from "date-fns";
+import { TimeStorageType } from "../reducerInternals/storage";
+import { Dispatch } from "react";
 
 type SelectionBarProps = {
-    hasZoom?: boolean
+    hasZoom?: boolean,
+    state: TimeStorageType,
+    dispatch: Dispatch<TimeEventsType>
 }
 
 export const TimeSelectionBar: React.FC<SelectionBarProps> = ({
@@ -16,7 +20,8 @@ export const TimeSelectionBar: React.FC<SelectionBarProps> = ({
     ...props
 }) => {
 
-    const { timeState: state, timeDispatch: dispatch } = useTimeContext();
+    const state = props.state;
+    const dispatch = props.dispatch;
 
     if (state.hasSelection === false) {
         return <></>

@@ -5,6 +5,7 @@ import { GoogleScope } from "@/graphql/google/google";
 import { useDataContextInternal } from "../context/useDataContextInternal";
 import { GraphInstance } from "./instance/graphInstance";
 import { TimeSelectionBar } from "@/modules/time/components/timeSelectionBar";
+import { useTimeContext } from "@/modules/time/timeContext";
 
 type GraphGridProps = {
     scope: GoogleScope,
@@ -18,6 +19,8 @@ export const GraphGrid: React.FC<GraphGridProps> = ({
 }) => {
 
     const context = useDataContextInternal(props.scope, props.fixedTime);
+
+    const {timeState, timeDispatch} = useTimeContext();
 
     return <div className="relative">
         
@@ -35,7 +38,7 @@ export const GraphGrid: React.FC<GraphGridProps> = ({
                 })}
         </div>
 
-        <TimeSelectionBar hasZoom={hasZoom}/>
+        <TimeSelectionBar hasZoom={hasZoom} state={timeState} dispatch={timeDispatch}/>
 
     </div>
 }

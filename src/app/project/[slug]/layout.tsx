@@ -3,6 +3,7 @@ import { scopeProvider } from "@/graphql/scope/ScopeProvider";
 import { ScopeDropdownMenu } from "@/modules/scope/components/scopeDropdownMenu";
 import { ScopeContextProvider } from "@/modules/scope/scopeContext";
 import { TimeFromControl } from "@/modules/time/components/controls/timeFromControl";
+import { TimeToControl } from "@/modules/time/components/controls/timeToControl";
 import { TimePresetDropdown } from "@/modules/time/components/timePresetDropdown";
 import { TimeContextProvider } from "@/modules/time/timeContext";
 import { Dropdown, DropdownTrigger } from "@nextui-org/react";
@@ -75,7 +76,7 @@ const ScopeLayout = async ({ ...props }) => {
                 <div className="flex gap-0 items-center group">
                     <TimeFromControl />
                     <div className="h-[2px] bg-gray-300 w-3 group-hover:bg-primary-300"></div>
-                    <TimeFromControl />
+                    <TimeToControl />
                 </div>
                 <TimePresetDropdown />
             </Navbar>

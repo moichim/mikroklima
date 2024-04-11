@@ -83,7 +83,7 @@ export class OpenmeteoForecastProvider extends AbstractWeatherProvider {
         
             hourly: {
                 time: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
-                    (t) => new Date((t + utcOffsetSeconds) * 1000)
+                    (t) => new Date((t + utcOffsetSeconds) * 1000 )
                 ),
                 temperature2m: hourly.variables(0)!.valuesArray()!,
                 relativeHumidity2m: hourly.variables(1)!.valuesArray()!,

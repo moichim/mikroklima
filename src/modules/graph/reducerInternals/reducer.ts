@@ -35,6 +35,13 @@ export const useGraphStackReducer: Reducer<GraphStackState, GraphStateActionBase
 
     switch (action.type) {
 
+        case GraphActions.REMOVE_ALL:
+
+        return {
+            ...state,
+            graphs: {}
+        }
+
         case GraphActions.ADD_GRAPH:
 
             const { property: propertyAdd }: AddGraphPayload = action.payload;

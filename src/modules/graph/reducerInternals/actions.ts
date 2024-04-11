@@ -24,7 +24,9 @@ export enum GraphActions {
 
     SET_TOUR_PASSED_STATE = 15,
     SET_TOUR_RUNNING = 16,
-    SET_TOUR_CURRENT_STEP = 17
+    SET_TOUR_CURRENT_STEP = 17,
+
+    REMOVE_ALL = 18
 
 }
 
@@ -37,6 +39,12 @@ type GraphStateActionPayload = {}
 
 interface GraphStackAction< P extends GraphStateActionPayload > extends GraphStateActionBase {
     payload: P
+}
+
+
+export type RemoveGraphs = {};
+export type RemoveGraphsAction = GraphStackAction<RemoveGraphs> & {
+    type: GraphActions.REMOVE_ALL
 }
 
 
@@ -240,6 +248,13 @@ export class StackActions {
         return {
             type: GraphActions.RESET_ALL,
             payload: true
+        }
+    }
+
+    public static removeAllGraphs(): RemoveGraphsAction {
+        return {
+            type: GraphActions.REMOVE_ALL,
+            payload: {}
         }
     }
 
