@@ -64,7 +64,6 @@ export const useGraphData = (
       return undefined;
     else {
       const processed = MeteoResponseProcessor.process(query.data);
-      console.log( "processed data", processed, "raw", query.data );
       return processed;
     }
 

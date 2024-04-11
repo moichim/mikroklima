@@ -7,15 +7,21 @@ import { useThermalRegistryLoadingState } from "@/modules/thermal/registry/prope
 import { useThermalGroupMinmaxProperty } from "@/modules/thermal/registry/properties/states/minmax/group/useThermalGroupMinmaxState";
 import { MinmaxTable } from "../../dataViews/minmaxTable";
 import { ThermalInstance } from "../instance/thermalInstance";
+import { useRouter } from "next/navigation";
+import { cn } from "@nextui-org/react";
 
 type ThermalGroupPanelProps = {
     group: ThermalGroup,
-    scopeId: string
+    scopeId: string,
+    instanceWidthClass: string,
+    instanceCompensationClass: string
 }
 
 export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
 
     const ID = useThermalObjectPurpose( props.group, "panel" );
+
+    const router = useRouter();
 
     const instances = useThermalGroupInstancesState(props.group, ID );
 
@@ -58,7 +64,11 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
 
             </div>
 
-            <div className="flex flex-wrap -ms-[1px] -me-[3px] lg:-me-[7px] -mb-[2px]">
+            <div className={cn( 
+                "flex flex-wrap -ms-[1px] -me-[3px] lg:-me-[7px] -mb-[2px]",
+                props.instanceWidthClass,
+                props.instanceCompensationClass
+            )}>
 
                 {instances.value.map(instance => <ThermalInstance
                     instance={instance}
@@ -67,8 +77,14 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
                     syncTimeHighlight={true}
                     highlightOnHover={true}
                     showDateOnHighlight={true}
-                    hasPopup={true}
+                    hasPopup={false}
                     scopeId={props.scopeId}
+                    onClick={ (i) => {
+
+                        const url = `/project/${props.scopeId}/thermo/${instance.timestamp + 1}`;
+
+                        router.push( url );
+                    } } 
                 />)}
 
             </div>

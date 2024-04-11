@@ -31,7 +31,7 @@ export abstract class AbstractWeatherProvider {
         args: MeteoRequestType 
     ): Promise<WeatherSerie> {
 
-        console.log( "fetchuji", this, args );
+        console.log( "fetchuji", args );
 
         return await this.doRequest( args ).then( response => {
             return {

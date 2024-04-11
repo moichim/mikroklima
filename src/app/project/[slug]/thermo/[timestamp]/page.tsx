@@ -1,7 +1,10 @@
 import { scopeProvider } from "@/graphql/scope/ScopeProvider";
+import { GraphWithFixedTime } from "@/modules/graph/components/graphs/graphWithFixedTime";
 import { GraphContextProvider } from "@/modules/graph/graphContext";
-import { GraphGrid } from "@/modules/meteo/components/GraphGrid";
+import { TimePeriod } from "@/modules/time/reducerInternals/actions";
 import { TimeController } from "@/thermal/components/controllers/timeController";
+import { TimeFormat } from "@/utils/timeUtils/formatting";
+import { TimeRound } from "@/utils/timeUtils/rounding";
 import { addHours, subDays } from "date-fns";
 
 
@@ -20,13 +23,33 @@ const DetailPage = async (
 
     const scope = await scopeProvider.fetchScopeDefinition(params.slug);
 
-    const from = subDays(parseInt(params.timestamp), 1).getTime();
-    const to = addHours(parseInt(params.timestamp), 1).getTime();
+    const imagesFrom = TimeRound.down(parseInt(params.timestamp), TimePeriod.DAY).getTime();
+
+    const imagesTo = TimeRound.up(parseInt(params.timestamp), TimePeriod.DAY).getTime();
+
 
     return <div>
-        <TimeController scopeId={params.slug} from={from} to={to} />
+        <TimeController 
+            scopeId={params.slug} 
+            from={imagesFrom} 
+            to={imagesTo} 
+        />
+
+        {TimeFormat.humanRangeDates( imagesFrom, imagesTo )}
+        <div>
+        {imagesFrom}
+        </div>
+        <div>
+        {imagesTo}
+        </div>
         <GraphContextProvider>
-            <GraphGrid scope={scope} fixedTime={{from, to}} hasZoom={false}/>
+            <GraphWithFixedTime
+                defaultGraphs={["temperature", "radiance", "humidity"]}
+                scope={scope}
+                hasZoom={false}
+                from={imagesFrom}
+                to={imagesTo}
+            />
         </GraphContextProvider>
     </div>
 }

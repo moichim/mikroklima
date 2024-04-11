@@ -65,8 +65,6 @@ export class ThermalCanvasLayer extends AbstractLayer {
 
     public draw(): void {
 
-        console.log( "překresluji", this.instance.group.registry.palette );
-
         // Get the displayed range
         const displayRange = this.to - this.from;
 

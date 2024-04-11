@@ -57,11 +57,7 @@ export const PaletteDropdown: React.FC<PaletteControlProps> = ({
         </DropdownTrigger>
         <DropdownMenu
             onAction={key => {
-
-                console.log(key);
-
                 palette.set(key)
-
             }}
         >
             {Object.entries(palette.availablePalettes).map(([key, palette]) => {

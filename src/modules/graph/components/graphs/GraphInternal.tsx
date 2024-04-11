@@ -1,31 +1,34 @@
 "use client";
 
-import { GoogleScope } from "@/graphql/google/google"
-import { AvailableWeatherProperties } from "@/graphql/weather/definitions/properties"
-import { useGraphCollection } from "../hooks/useGraphCollection"
+import { GoogleScope } from "@/graphql/google/google";
+import { AvailableWeatherProperties } from "@/graphql/weather/definitions/properties";
 import { Toolbar } from "@/modules/graph/components/toolbar/toolbar";
 import { TimeSelectionBar } from "@/modules/time/components/timeSelectionBar";
-import { useGraphTimeFixed } from "@/modules/graph/hooks/useGraphTime";
-import { GraphInstance } from "@/modules/meteo/components/instance/graphInstance";
-import { GraphInstanceNew } from "./instance/GraphInstanceNew";
-import { useTimeContext } from "@/modules/time/timeContext";
+import { TimeEventsType } from "@/modules/time/reducerInternals/actions";
+import { TimeStorageType } from "@/modules/time/reducerInternals/storage";
+import { Dispatch } from "react";
+import { useGraphCollection } from "../../hooks/useGraphCollection";
+import { GraphInstanceNew } from "../instance/GraphInstanceNew";
 
-type GraphProps = {
+export type GraphCommonProps = {
     defaultGraphs: AvailableWeatherProperties[],
-    scope: GoogleScope,
     hasZoom?: boolean,
-    from: number,
-    to: number
+    scope: GoogleScope,
 }
 
-export const Graph: React.FC<GraphProps> = ( {
+type GraphProps = GraphCommonProps & {
+    state: TimeStorageType,
+    dispatch: Dispatch<TimeEventsType>
+}
+
+export const GraphInternal: React.FC<GraphProps> = ( {
+    state,
+    dispatch,
     hasZoom = false,
     ...props
 } ) => {
 
-    const { state, dispatch } = useGraphTimeFixed( props.from, props.to );
-
-    // const { timeState: state, timeDispatch: dispatch } = useTimeContext();
+    // const { state, dispatch } = useGraphTimeFixed( props.from, props.to );
 
     const collection = useGraphCollection(
         props.defaultGraphs,

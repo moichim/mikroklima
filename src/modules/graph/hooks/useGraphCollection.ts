@@ -41,7 +41,7 @@ export const useGraphCollection = (
         // if ( state.from !== undefined && state.to !== undefined ) {
             graphData.fetch( state.from, state.to );
             viewStats.clear();
-            selectionStats.clear();
+            // selectionStats.clear();
         // }
 
     }, [ state.from, state.to ] );
@@ -76,8 +76,13 @@ export const useGraphCollection = (
         return Object.values( graph.graphState.graphs ).map( instance => {
 
             const gd = graphData.data
-                ? graphData.data[ instance.property.slug ]
+                ? graphData.data.data
                 : undefined;
+
+            const gr = graphData.data
+                ? graphData.data.resourcesMap[instance.property.slug]
+                : undefined;
+
 
 
             // View Statistics
@@ -168,6 +173,7 @@ export const useGraphCollection = (
 
             return {
                 graphData: gd,
+                graphResourcesMap: gr,
                 state,
                 setProperty,
                 setHeight,

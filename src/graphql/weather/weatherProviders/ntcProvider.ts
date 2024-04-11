@@ -63,11 +63,27 @@ export class NtcProvider extends AbstractWeatherProvider {
 
     public async doRequest ( args: MeteoRequestType ) {
 
-        const url = this.prepareRequestUrl( args.from, args.to );
+        const url = this.prepareRequestUrl( parseInt( args.from.toFixed(0) ), parseInt( args.to.toFixed(0) ) );
 
-        const entries = await fetch( url ).then( r => r.json() as unknown as NtcResponseEntryType[] );
+        console.log( url );
 
-        return entries.map( entry => this.mapResponseToWeatherEntry( entry ) ).reverse();
+        const entries = await fetch( url );
+            // .then( r => r.json() as unknown as NtcResponseEntryType[] );
+
+        try {
+            
+            const items = await entries.json() as unknown as NtcResponseEntryType[];
+
+            return items.map( entry => this.mapResponseToWeatherEntry( entry ) );
+
+
+        } catch (e) {
+            // console.error( e );
+            // 1701730792799
+            // 1701644392800
+            return [];
+        }
+
 
     }
 

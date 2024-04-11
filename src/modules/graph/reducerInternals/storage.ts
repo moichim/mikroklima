@@ -51,7 +51,7 @@ export type GraphStackState = {
 export class GraphStateFactory {
 
     public static defaultState(
-        properties: AvailableWeatherProperties[] = [ "temperature", "radiance", "humidity" ]
+        properties: AvailableWeatherProperties[] = [ "temperature" ]
     ): GraphStackState {
         return {
             sharedScale: "md",

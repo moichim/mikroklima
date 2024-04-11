@@ -1,6 +1,7 @@
 import { AvailableWeatherProperties, Properties } from "@/graphql/weather/definitions/properties";
 import { Sources } from "@/graphql/weather/definitions/source";
 import { MeteoQueryResponseType } from "./query";
+import { DataMapping } from "@/modules/data/graphql/dataMapping";
 
 export type BufferEntryType = {
     [index: string]: number | undefined
@@ -20,8 +21,18 @@ export class MeteoResponseProcessor {
     public static process(
         response: MeteoQueryResponseType
     ) {
+        return DataMapping.processGraph( response );
+    }
+
+    /** @deprecated */
+    public static processDeprecated(
+        response: MeteoQueryResponseType
+    ) {
 
         let drive = MeteoResponseProcessor.generateTheDrive(response);
+
+
+        const mapped = DataMapping.processGraph( response );
 
 
 
@@ -173,7 +184,13 @@ export class MeteoResponseProcessor {
                 return a.time - b.time;
             });
 
-        console.log("spočítáno", computed, resources);
+        /// console.log("spočítáno", computed, resources);
+
+
+
+
+
+
 
         // Namapovat google values na index podle času
         const googleIndex = MeteoResponseProcessor.dumpGoogleDataToTimeEntries(response.rangeGoogle);
@@ -323,4 +340,4 @@ export class MeteoResponseProcessor {
 
 }
 
-export type MeteoDataProcessed = ReturnType<typeof MeteoResponseProcessor["process"]>
+export type MeteoDataProcessed = ReturnType<typeof MeteoResponseProcessor["processDeprecated"]>

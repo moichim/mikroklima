@@ -6,9 +6,9 @@ export const useGraphViewTicks = (props: GraphInstanceProps) => {
 
     return useMemo(() => {
 
-        let durationInHours = props.graphData ? props.graphData.data.length : 0;
+        let durationInHours = props.graphData ? props.graphData.length : 0;
 
-        let times = (durationInHours > 0 && props.graphData) ? Object.values(props.graphData.data)
+        let times = (durationInHours > 0 && props.graphData) ? Object.values(props.graphData)
             .map(entry => entry.time) : [];
 
         let formatter: ((value: any, index: number) => string) | undefined = name => {

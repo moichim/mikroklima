@@ -1,11 +1,12 @@
 import { googleSheetsProvider } from "@/graphql/google/googleProvider/googleProvider";
-import { GraphGrid } from "@/modules/meteo/components/GraphGrid";
 import { GraphContextProvider } from "@/modules/graph/graphContext";
 import { getMetadataPublisher, getMetadataTitle } from "@/utils/metadata";
 import { Metadata, ResolvingMetadata } from "next";
 import { ScopePageProps } from "../layout";
-import { Graph } from "@/modules/graph/components/Graph";
+import { GraphInternal } from "@/modules/graph/components/graphs/GraphInternal";
 import { scopeProvider } from "@/graphql/scope/ScopeProvider";
+import { GraphWithFixedTime } from "@/modules/graph/components/graphs/graphWithFixedTime";
+import { GraphWithGlobalTime } from "@/modules/graph/components/graphs/graphWithGlobalTime";
 
 export const generateStaticParams = async () => {
 
@@ -35,13 +36,11 @@ const ScopePage = async (props: ScopePageProps) => {
     const scope = await scopeProvider.fetchScopeDefinition(props.params.slug);
 
     return <GraphContextProvider>
-        {/* <GraphGrid scope={scope}/> */}
-        <Graph 
-            scope={scope} 
-            from={1707567048 * 1000}
-            to={1712753533 * 1000}
-            defaultGraphs={["temperature", "humidity"]}
-        /> 
+        <GraphWithGlobalTime 
+            defaultGraphs={["temperature", "radiance", "humidity"]}
+            scope={scope}
+            hasZoom
+        />
     </GraphContextProvider>
 }
 

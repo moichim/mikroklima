@@ -29,7 +29,11 @@ export class OpenMeteoHistoryProvider extends AbstractWeatherProvider {
 
     public async doRequest(args: MeteoRequestType) {
 
+        console.log( "fetchuji openmeteo history" );
+
         const clampedTo = this.clampTo(args.to);
+
+        console.log( clampedTo, args.from );
 
         if (clampedTo < args.from) return [];
 
@@ -45,6 +49,8 @@ export class OpenMeteoHistoryProvider extends AbstractWeatherProvider {
         };
         const url = "https://archive-api.open-meteo.com/v1/archive";
         const responses = await fetchWeatherApi(url, params);
+
+        console.log( params, responses );
 
         // Helper function to form time ranges
         const range = (start: number, stop: number, step: number) =>

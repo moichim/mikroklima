@@ -9,6 +9,7 @@ import { TemperatureScaleBase } from "../controls/scale/internals/ThermalRangeSl
 import { Navbar } from "@/components/ui/navigation/Navbar";
 import { RegistryDisplay } from "../displays/registry/registryDisplay";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
+import { TimeDisplay } from "../displays/time/timeDisplay";
 
 type TimeControllerProps = {
     scopeId: string,
@@ -55,22 +56,22 @@ export const TimeController: React.FC<TimeControllerProps> = ({ ...props }) => {
                 <OpacitySlider registry={registry} className="md:w-60" />
                 <PaletteDropdown registry={registry} />
             </>}
+            closeLink={`/project/${props.scopeId}/thermo`}
+            closeLinkHint="Zpět na přehled všech termogramů"
         />
 
         <header
-            className="p-4"
+            className="p-4 py-8 text-center"
         >
-            <div>Situace v čase:</div>
             <h1
                 className="text-2xl font-bold"
             >
-                {TimeFormat.human(props.to)}
+                {TimeFormat.humanDate(props.to)}
             </h1>
-            <p>Termogramy a měření v období předcházejícím daný čas</p>
         </header>
 
         <div className="px-2 pt-4">
-            <RegistryDisplay registry={registry} scopeId={props.scopeId}/>
+            <TimeDisplay registry={registry} scopeId={props.scopeId}/>
         </div >
 
     </>

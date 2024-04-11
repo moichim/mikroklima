@@ -1,13 +1,15 @@
+"use client";
+
 import { GraphInstanceProps } from "@/modules/meteo/context/useDataContextInternal";
-import { graphInstanceHeights } from "../../reducerInternals/storage";
-import { Dispatch, useMemo } from "react";
+import { TimeEventsFactory, TimeEventsType } from "@/modules/time/reducerInternals/actions";
 import { TimeStorageType } from "@/modules/time/reducerInternals/storage";
-import { TimeEvents, TimeEventsFactory, TimeEventsType } from "@/modules/time/reducerInternals/actions";
+import { TimeFormat } from "@/utils/timeUtils/formatting";
+import { Dispatch, useMemo } from "react";
+import { graphInstanceHeights } from "../../reducerInternals/storage";
 import { GraphinstanceSelector } from "./internals/graphInstanceSelector";
 import { GraphInstanceSizes } from "./internals/graphInstanceSizes";
-import { GraphView } from "./view/graphView";
 import { Statistics } from "./statistics/statistics";
-import { TimeFormat } from "@/utils/timeUtils/formatting";
+import { GraphView } from "./view/graphView";
 
 type GraphInstanceNewProps = GraphInstanceProps & {
     timeState: TimeStorageType,

@@ -21,6 +21,8 @@ type ThermalInstanceProps = ThermalInstanceDisplayParameters & {
     scopeId: string,
     instance: ThermalFileInstance,
     className?: string,
+    onClick?: ( instance: ThermalFileInstance ) => void,
+    columns?: number
 }
 
 /** 
@@ -38,6 +40,9 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
     highlightColor = undefined,
     highlightOnHover = true,
     forceHighlight = false,
+    onClick = undefined,
+
+    columns = 1,
 
     ...props
 }) => {
@@ -136,6 +141,20 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
         return() => instance.setClickHandler();
 
     }, [hasPopup, popupOpen, setPopupOpen, instance]);
+
+
+    // Add click handler
+    useEffect( () => {
+
+        if ( onClick !== undefined ) {
+            instance.setClickHandler( () => {
+                onClick( instance );
+            } );
+        }
+
+        return () => instance.setClickHandler();
+
+    }, [onClick, instance] );
 
 
 

@@ -31,7 +31,7 @@ export const GraphView: React.FC<GraphViewProps> = props => {
         onClick,
         cursor,
         isSelectingLocal
-    } = useGraphViewInteractions( props.timeState, props.dispatch );
+    } = useGraphViewInteractions(props.timeState, props.dispatch);
 
 
     const formatLabel = useCallback((value: number) => stringLabelFromTimestamp(value), []);
@@ -82,10 +82,10 @@ export const GraphView: React.FC<GraphViewProps> = props => {
             height={props.height}
         >
             <LineChart
-                data={props.graphData.data}
+                data={props.graphData}
                 margin={{ left: 50 }}
                 syncId={"syncId"}
-                onMouseMove={ isSelectingLocal ? onMouseMove : undefined}
+                onMouseMove={isSelectingLocal ? onMouseMove : undefined}
                 onClick={onClick}
 
             >
@@ -102,32 +102,45 @@ export const GraphView: React.FC<GraphViewProps> = props => {
                 }
 
 
-                {props.graphData && props.graphData.lines.map(source => {
+                {(props.graphData && props.graphResourcesMap) && Object.values(props.graphResourcesMap).map(resource => {
+
+                    if (resource.isLine === true) {
+                        return <Line
+                            key={resource.dataKey}
+                            dataKey={resource.dataKey}
+                            stroke={resource.color}
+                            dot={false}
+                            isAnimationActive={false}
+                            unit={" " + resource.unit}
+                        />
+                    } else if (resource.isLine === false) {
+                        return <Line
+                            key={resource.dataKey}
+                            fill={resource.color}
+                            dataKey={resource.dataKey}
+                            stroke={resource.color}
+                            dot={true}
+                            isAnimationActive={false}
+                            unit={" " + resource.unit}
+                            connectNulls
+                            name={resource.name}
+                        />
+                    }
 
                     return <Line
-                        key={source.slug}
-                        dataKey={source.slug}
-                        dot={false}
-                        unit={" " + props.state.property.unit ?? ""}
-                        stroke={source.stroke}
-                        isAnimationActive={false}
-                        name={source.name}
-                    />
+                            key={resource.dataKey}
+                            dataKey={resource.dataKey}
+                            stroke={resource.color}
+                            fill={resource.color}
+                            dot={true}
+                            isAnimationActive={false}
+                            unit={" " + resource.unit}
+                            connectNulls
+                            name={resource.name}
+                        />
 
                 })}
 
-                {props.graphData && props.graphData.dots.map(dot => {
-                    return <Line
-                        key={dot.slug}
-                        fill={dot.color}
-                        stroke={dot.color}
-                        dataKey={dot.slug}
-                        isAnimationActive={false}
-                        unit={dot.in.unit ?? ""}
-                        connectNulls={true}
-                        name={dot.name}
-                    />
-                })}
 
                 <YAxis
                     unit={props.state.property.unit}
