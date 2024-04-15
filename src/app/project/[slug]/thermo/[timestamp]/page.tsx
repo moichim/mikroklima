@@ -1,8 +1,8 @@
 import { scopeProvider } from "@/graphql/scope/ScopeProvider";
 import { GraphWithFixedTime } from "@/modules/graph/components/graphs/graphWithFixedTime";
 import { GraphContextProvider } from "@/modules/graph/graphContext";
+import { TimeController } from "@/modules/thermal/components/views/time/timeController";
 import { TimePeriod } from "@/modules/time/reducerInternals/actions";
-import { TimeController } from "@/thermal/components/controllers/timeController";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
 import { TimeRound } from "@/utils/timeUtils/rounding";
 import { addHours, subDays } from "date-fns";
@@ -29,18 +29,22 @@ const DetailPage = async (
 
 
     return <div>
-        <TimeController 
-            scopeId={params.slug} 
-            from={imagesFrom} 
-            to={imagesTo} 
+        <TimeController
+            scopeId={params.slug}
+            from={imagesFrom}
+            to={imagesTo}
         />
 
-        {TimeFormat.humanRangeDates( imagesFrom, imagesTo )}
-        <div>
-        {imagesFrom}
-        </div>
-        <div>
-        {imagesTo}
+        <div className="text-center">
+
+            {TimeFormat.humanRangeDates(imagesFrom, imagesTo)}
+            <div>
+                {imagesFrom}
+            </div>
+            <div>
+                {imagesTo}
+            </div>
+
         </div>
         <GraphContextProvider>
             <GraphWithFixedTime

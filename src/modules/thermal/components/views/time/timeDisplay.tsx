@@ -6,12 +6,12 @@ import { ThermalRegistry } from "@/thermal/registry/ThermalRegistry";
 import { useThermalRegistryLoadingState } from "@/thermal/registry/properties/states/loading/useThermalRegistryLoadingState";
 import { useThermalRegistryMinmaxState } from "@/thermal/registry/properties/states/minmax/registry/useThermalRegistryMinmaxState";
 import { Progress } from "@nextui-org/react";
-import { ThermalGroupPanel } from "./thermalGroupPanel";
-import { useEffect, useState } from "react";
+import { TimeGroupPanel } from "./thermalGroupPanel";
 
 export type RegistryDisplayProps = {
     registry: ThermalRegistry,
-    scopeId: string
+    scopeId: string,
+    columns: number
 }
 
 /**
@@ -19,7 +19,7 @@ export type RegistryDisplayProps = {
  * 
  * Does not remove the registry upon unmount. This important thing should be executed by the parent component.
  */
-export const RegistryDisplay: React.FC<RegistryDisplayProps> = props => {
+export const TimeDisplay: React.FC<RegistryDisplayProps> = props => {
 
     const ID = useThermalObjectPurpose(props.registry, "registryDisplay");
 
@@ -30,41 +30,8 @@ export const RegistryDisplay: React.FC<RegistryDisplayProps> = props => {
 
     const {value} = useThermalRegistryMinmaxState( props.registry, ID );
 
-    const [ classes, setClasses ] = useState<[string,string]>( ["w-full","-mr-[1px]"] );
-
-    const [ maxNumber, setMaxNumber ] = useState<number>(1);
-
-    useEffect( () => {
-
-        if ( maxNumber === 1 ) {
-            setClasses( [ "w-full"," -me-[1px]" ] );
-        } else if ( maxNumber === 2 ) {
-            setClasses( [ "w-1/2", "-mr-[3px]" ] );
-        } else {
-            setClasses( [ "w-1/3", "-mr-[7px]" ] );
-        }
-
-    }, [maxNumber] );
-
-    useEffect( () => {
-
-        const longest = groups.value.reduce( (state, current) => {
-
-            if (current.instances.value.length > state) {
-                return current.instances.value.length;
-            }
-
-            return state;
-
-        }, 0 );
-
-        setMaxNumber( longest );
-
-    }, [groups] );
-
-
     if (value === undefined) {
-        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4">
+        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4 border-2 border-dashed border-gray-400">
             <Progress
                 size="sm"
                 isIndeterminate
@@ -77,7 +44,7 @@ export const RegistryDisplay: React.FC<RegistryDisplayProps> = props => {
 
 
     if (loading.value === true) {
-        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4">
+        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4 border-2 border-dashed border-gray-400">
             <Progress
                 size="sm"
                 isIndeterminate
@@ -92,13 +59,7 @@ export const RegistryDisplay: React.FC<RegistryDisplayProps> = props => {
 
         {/** Zde by měla být teplotní škála a další vlastnosti */}
 
-        {groups.value.map(group => <ThermalGroupPanel 
-            group={group} 
-            key={group.id} 
-            scopeId={props.scopeId} 
-            instanceWidthClass={classes[0]}
-            instanceCompensationClass={classes[1]}
-        />)}
+        {groups.value.map(group => <TimeGroupPanel group={group} key={group.id} scopeId={props.scopeId} columns={props.columns}/>)}
 
     </div>
 

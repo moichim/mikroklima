@@ -2,14 +2,15 @@
 
 import { useProjectLoader } from "@/modules/thermal/context/useProjectLoader";
 import { useThermalRegistry } from "@/modules/thermal/context/useThermalRegistry";
-import { useEffect, useMemo } from "react";
-import { OpacitySlider } from "../controls/opacity/OpacitySlider";
-import { PaletteDropdown } from "../controls/palette/paletteDropdown";
-import { TemperatureScaleBase } from "../controls/scale/internals/ThermalRangeSlider";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { OpacitySlider } from "../../controls/opacity/OpacitySlider";
+import { PaletteDropdown } from "../../controls/palette/paletteDropdown";
+import { TemperatureScaleBase } from "../../controls/scale/internals/ThermalRangeSlider";
 import { Navbar } from "@/components/ui/navigation/Navbar";
-import { RegistryDisplay } from "../displays/registry/registryDisplay";
+import { RegistryDisplay } from "../project/registryDisplay";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
-import { TimeDisplay } from "../displays/time/timeDisplay";
+import { TimeDisplay } from "./timeDisplay";
+import { PanelWidthDropdown } from "../../controls/panelWidth/panelWidthDropdown";
 
 type TimeControllerProps = {
     scopeId: string,
@@ -41,6 +42,28 @@ export const TimeController: React.FC<TimeControllerProps> = ({ ...props }) => {
         // registry.destroySelfInTheManager();
     }, []);
 
+    const [panelWidth, setPanelWidth] = useState<number>(1);
+
+
+    // Every time the folder is loaded, automatically calculate the width of the panel
+    useEffect(() => {
+
+        const max = Object.values( projectDescription ).reduce( (state, current) => {
+
+            if ( current.files.length > state && current.files.length < 5 ) {
+                return current.files.length;
+            }
+
+            return state;
+
+        }, 0 );
+
+        setPanelWidth( max );
+
+    }, [projectDescription]);
+
+    
+
 
     return <>
 
@@ -55,6 +78,7 @@ export const TimeController: React.FC<TimeControllerProps> = ({ ...props }) => {
                 </div>
                 <OpacitySlider registry={registry} className="md:w-60" />
                 <PaletteDropdown registry={registry} />
+                <PanelWidthDropdown current={panelWidth} onUpdate={setPanelWidth} />
             </>}
             closeLink={`/project/${props.scopeId}/thermo`}
             closeLinkHint="Zpět na přehled všech termogramů"
@@ -71,7 +95,7 @@ export const TimeController: React.FC<TimeControllerProps> = ({ ...props }) => {
         </header>
 
         <div className="px-2 pt-4">
-            <TimeDisplay registry={registry} scopeId={props.scopeId}/>
+            <TimeDisplay registry={registry} scopeId={props.scopeId} columns={panelWidth} />
         </div >
 
     </>

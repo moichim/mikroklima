@@ -6,10 +6,11 @@ import { PaletteDropdown } from "@/modules/thermal/components/controls/palette/p
 import { TemperatureScaleBase } from "@/modules/thermal/components/controls/scale/internals/ThermalRangeSlider";
 import { useProjectLoader } from "@/modules/thermal/context/useProjectLoader";
 import { useTimeContext } from "@/modules/time/timeContext";
-import { useEffect, useMemo } from "react";
-import { useThermalManagerContext } from "../../context/thermalManagerContext";
-import { useThermalRegistry } from "../../context/useThermalRegistry";
-import { RegistryDisplay } from "../displays/registry/registryDisplay";
+import { useEffect, useMemo, useState } from "react";
+import { useThermalManagerContext } from "../../../context/thermalManagerContext";
+import { useThermalRegistry } from "../../../context/useThermalRegistry";
+import { RegistryDisplay } from "./registryDisplay";
+import { PanelWidthDropdown } from "../../controls/panelWidth/panelWidthDropdown";
 
 
 type ProjectDisplayProps = {
@@ -63,6 +64,26 @@ export const ProjectController: React.FC<ProjectDisplayProps> = props => {
 
     }, []);
 
+    const [panelWidth, setPanelWidth] = useState<number>(1);
+
+
+    // Every time the folder is loaded, automatically calculate the width of the panel
+    useEffect(() => {
+
+        const max = Object.values( projectDescription ).reduce( (state, current) => {
+
+            if ( current.files.length > state && current.files.length < 4 ) {
+                return current.files.length;
+            }
+
+            return state;
+
+        }, 0 );
+
+        setPanelWidth( max );
+
+    }, [projectDescription]);
+
 
     return <>
 
@@ -77,11 +98,12 @@ export const ProjectController: React.FC<ProjectDisplayProps> = props => {
                 </div>
                 <OpacitySlider registry={registry} className="md:w-60" />
                 <PaletteDropdown registry={registry} />
+                <PanelWidthDropdown current={panelWidth} onUpdate={setPanelWidth} />
             </>}
         />
 
         <div className="px-2 pt-4">
-            <RegistryDisplay registry={registry} scopeId={ props.scopeId }/>
+            <RegistryDisplay registry={registry} scopeId={ props.scopeId } columns={panelWidth}/>
         </div >
 
     </>

@@ -8,7 +8,7 @@ import { ThermalFileInstance } from "@/modules/thermal/file/ThermalFileInstance"
 import { useThermalRegistryMinmaxState } from "@/thermal/registry/properties/states/minmax/registry/useThermalRegistryMinmaxState";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
 import { Snippet, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
-import { ThermalInstance, ThermalInstanceDisplayParameters } from "../../instance/thermalInstance";
+import { ThermalInstance, ThermalInstanceDisplayParameters } from "../../../instance/thermalInstance";
 import { SingleInstanceDownloadButtons } from "./singleInstanceDownloadButtons";
 
 type SingleInstanceDetailProps = ThermalInstanceDisplayParameters & {

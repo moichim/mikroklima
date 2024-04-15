@@ -6,11 +6,13 @@ import { ThermalRegistry } from "@/thermal/registry/ThermalRegistry";
 import { useThermalRegistryLoadingState } from "@/thermal/registry/properties/states/loading/useThermalRegistryLoadingState";
 import { useThermalRegistryMinmaxState } from "@/thermal/registry/properties/states/minmax/registry/useThermalRegistryMinmaxState";
 import { Progress } from "@nextui-org/react";
-import { TimeGroupPanel } from "./thermalGroupPanel";
+import { ThermalGroupPanel } from "./thermalGroupPanel";
+import { useEffect, useState } from "react";
 
 export type RegistryDisplayProps = {
     registry: ThermalRegistry,
-    scopeId: string
+    scopeId: string,
+    columns: number
 }
 
 /**
@@ -18,7 +20,7 @@ export type RegistryDisplayProps = {
  * 
  * Does not remove the registry upon unmount. This important thing should be executed by the parent component.
  */
-export const TimeDisplay: React.FC<RegistryDisplayProps> = props => {
+export const RegistryDisplay: React.FC<RegistryDisplayProps> = props => {
 
     const ID = useThermalObjectPurpose(props.registry, "registryDisplay");
 
@@ -29,8 +31,9 @@ export const TimeDisplay: React.FC<RegistryDisplayProps> = props => {
 
     const {value} = useThermalRegistryMinmaxState( props.registry, ID );
 
+
     if (value === undefined) {
-        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4 border-2 border-dashed border-gray-400">
+        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4">
             <Progress
                 size="sm"
                 isIndeterminate
@@ -43,7 +46,7 @@ export const TimeDisplay: React.FC<RegistryDisplayProps> = props => {
 
 
     if (loading.value === true) {
-        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4 border-2 border-dashed border-gray-400">
+        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4">
             <Progress
                 size="sm"
                 isIndeterminate
@@ -58,7 +61,12 @@ export const TimeDisplay: React.FC<RegistryDisplayProps> = props => {
 
         {/** Zde by měla být teplotní škála a další vlastnosti */}
 
-        {groups.value.map(group => <TimeGroupPanel group={group} key={group.id} scopeId={props.scopeId} />)}
+        {groups.value.map(group => <ThermalGroupPanel 
+            group={group} 
+            key={group.id} 
+            scopeId={props.scopeId} 
+            columns={props.columns}
+        />)}
 
     </div>
 

@@ -5,8 +5,9 @@ import { TimeFormat } from "@/utils/timeUtils/formatting";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, cn } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { SingleController } from "../../controllers/singleController";
-import { SingleInstanceDownloadButtons } from "../single/detail/singleInstanceDownloadButtons";
+import { SingleController } from "../views/single/singleController";
+import { SingleInstanceDownloadButtons } from "../views/single/detail/singleInstanceDownloadButtons";
+import { useInstanceWidth } from "./useInstanceWidth";
 
 export type ThermalInstanceDisplayParameters = {
     hasPopup?: boolean,
@@ -17,11 +18,11 @@ export type ThermalInstanceDisplayParameters = {
     forceHighlight?: boolean
 }
 
-type ThermalInstanceProps = ThermalInstanceDisplayParameters & {
+type ThermalInstanceProps = ThermalInstanceDisplayParameters & React.PropsWithChildren & {
     scopeId: string,
     instance: ThermalFileInstance,
     className?: string,
-    onClick?: ( instance: ThermalFileInstance ) => void,
+    onClick?: (instance: ThermalFileInstance) => void,
     columns?: number
 }
 
@@ -31,7 +32,7 @@ type ThermalInstanceProps = ThermalInstanceDisplayParameters & {
  * Creates the DOM inside which the instance shall be rendered.
 */
 export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
-    className = "w-full xs:w-1/2 lg:w-1/3",
+    className = "",
     instance,
 
     hasPopup = false,
@@ -43,6 +44,7 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
     onClick = undefined,
 
     columns = 1,
+    children,
 
     ...props
 }) => {
@@ -74,7 +76,7 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
             instance.setClickHandler();
         }
 
-    }, [hasPopup,instance]);
+    }, [hasPopup, instance]);
 
 
     // Propagate date on highlight display
@@ -83,7 +85,7 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
         if (showDateOnHighlight !== instance.showDateOnHighlight)
             instance.setShowDateOnHighlight(showDateOnHighlight);
 
-    }, [showDateOnHighlight,instance]);
+    }, [showDateOnHighlight, instance]);
 
     // Propagate the time highlight synchronisation
     useEffect(() => {
@@ -91,7 +93,7 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
         if (syncTimeHighlight !== instance.timeHighlightSync)
             instance.setTimeHiglightSync(syncTimeHighlight)
 
-    }, [syncTimeHighlight,instance]);
+    }, [syncTimeHighlight, instance]);
 
     // Propagate the highlight color
     useEffect(() => {
@@ -99,7 +101,7 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
         if (highlightColor !== instance.highlightColor)
             instance.setHighlightColor(highlightColor);
 
-    }, [highlightColor,instance]);
+    }, [highlightColor, instance]);
 
     // Propagate the highlight on hover
     useEffect(() => {
@@ -107,7 +109,7 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
         if (highlightOnHover !== instance.highlightOnHover)
             instance.setHighlightOnHover(highlightOnHover);
 
-    }, [highlightOnHover,instance]);
+    }, [highlightOnHover, instance]);
 
     // Propagate the force highlight state
     useEffect(() => {
@@ -115,7 +117,7 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
         if (forceHighlight !== instance.forceHighlight)
             instance.setForceHighlight(forceHighlight);
 
-    }, [forceHighlight,instance]);
+    }, [forceHighlight, instance]);
 
 
     // The popup open state
@@ -138,31 +140,39 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
             });
         }
 
-        return() => instance.setClickHandler();
+        return () => instance.setClickHandler();
 
     }, [hasPopup, popupOpen, setPopupOpen, instance]);
 
 
     // Add click handler
-    useEffect( () => {
+    useEffect(() => {
 
-        if ( onClick !== undefined ) {
-            instance.setClickHandler( () => {
-                onClick( instance );
-            } );
+        if (onClick !== undefined) {
+            instance.setClickHandler(() => {
+                onClick(instance);
+            });
         }
 
         return () => instance.setClickHandler();
 
-    }, [onClick, instance] );
+    }, [onClick, instance]);
 
 
 
     return <>
-        <div
-            ref={ref}
-            className={cn(className, "relative p-0 m-0")}
-        ></div>
+        <div className={cn("-m-[2px]")} >
+            {/** Optionally output the fhildren */}
+            {children && <div className="mx-[2px]">
+                {children}
+            </div>}
+            {/** Output the main element */}
+            <div
+                ref={ref}
+                className={"relative p-0 m-0"}
+            >
+            </div>
+        </div>
         <Modal
             isOpen={popupOpen}
             onOpenChange={setPopupOpen}

@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
-import { ThermalGroup } from "../../../registry/ThermalGroup";
+import { ThermalGroup } from "../../registry/ThermalGroup";
 import { cn } from "@nextui-org/react";
+import { CSSDeclarationList } from "tailwindcss/types/generated/default-theme";
 
-const classes = {
+const classes: {
+    [index: string]: CSSDeclarationList
+} = {
     "full": {
-        width: "w-full",
+        width: "",
         margin: "-me-[2px]"
     },
     "1/2": {
-        width: "w-1/2",
-        margin: "-m-[3px]"
+        width: "",
+        margin: "-me-[3px]"
     },
     "1/3": {
-        width: "w-1/4",
-        margin: "-me-[7px]"
+        width: "",
+        margin: "-me-[2px] md:-me-[4px] lg:-me-[7px] mb-0"
     }
 };
 
@@ -47,7 +50,11 @@ export const useInstanceWidth = (
         value = classes[ "1/2" ];
     }
 
-    const result = cn( Object.values( value ) , "-ms-[2px]" );
+    const result = cn( 
+        Object.values( value ), 
+        "-ms-[2px] -mb-[2px]",
+        // "-me-[100px]"
+    );
 
     console.log( result );
 

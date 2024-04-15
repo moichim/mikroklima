@@ -6,7 +6,7 @@ import { ThermalRegistry } from "@/thermal/registry/ThermalRegistry";
 import { useThermalRegistryLoadingState } from "@/thermal/registry/properties/states/loading/useThermalRegistryLoadingState";
 import { Spinner } from "@nextui-org/react";
 import { useEffect } from "react";
-import { ThermalInstanceDisplayParameters } from "../instance/thermalInstance";
+import { ThermalInstanceDisplayParameters } from "../../instance/thermalInstance";
 import { SingleInstanceDetail } from "./detail/singleInstanceDetail";
 
 type SingleDisplayProps = ThermalInstanceDisplayParameters & {

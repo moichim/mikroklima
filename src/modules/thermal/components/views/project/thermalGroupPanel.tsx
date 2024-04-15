@@ -6,15 +6,15 @@ import { useThermalGroupInstancesState } from "@/modules/thermal/registry/proper
 import { useThermalRegistryLoadingState } from "@/modules/thermal/registry/properties/states/loading/useThermalRegistryLoadingState";
 import { useThermalGroupMinmaxProperty } from "@/modules/thermal/registry/properties/states/minmax/group/useThermalGroupMinmaxState";
 import { MinmaxTable } from "../../dataViews/minmaxTable";
-import { ThermalInstance } from "../instance/thermalInstance";
+import { ThermalInstance } from "../../instance/thermalInstance";
 import { useRouter } from "next/navigation";
 import { cn } from "@nextui-org/react";
+import { usePanelWidth } from "../../controls/panelWidth/usePanelWidth";
 
 type ThermalGroupPanelProps = {
     group: ThermalGroup,
     scopeId: string,
-    instanceWidthClass: string,
-    instanceCompensationClass: string
+    columns: number
 }
 
 export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
@@ -28,6 +28,8 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
     const minmax = useThermalGroupMinmaxProperty(props.group, ID );
 
     const loading = useThermalRegistryLoadingState(props.group.registry, ID );
+
+    const panelWidth = usePanelWidth(props.columns);
 
     return <div className="w-1/3 px-2">
         <div className="bg-white rounded-t-xl">
@@ -64,11 +66,7 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
 
             </div>
 
-            <div className={cn( 
-                "flex flex-wrap -ms-[1px] -me-[3px] lg:-me-[7px] -mb-[2px]",
-                props.instanceWidthClass,
-                props.instanceCompensationClass
-            )}>
+            <div className={panelWidth}>
 
                 {instances.value.map(instance => <ThermalInstance
                     instance={instance}

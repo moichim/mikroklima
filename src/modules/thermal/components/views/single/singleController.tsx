@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { useThermalManagerContext } from "../../context/thermalManagerContext";
-import { useThermalRegistry } from "../../context/useThermalRegistry";
-import { ThermalInstanceDisplayParameters } from "../displays/instance/thermalInstance";
-import { SingleDisplay } from "../displays/single/singleDisplay";
+import { useThermalManagerContext } from "../../../context/thermalManagerContext";
+import { useThermalRegistry } from "../../../context/useThermalRegistry";
+import { ThermalInstanceDisplayParameters } from "../../instance/thermalInstance";
+import { SingleDisplay } from "./singleDisplay";
 
 type SingleDisplayProps = ThermalInstanceDisplayParameters & {
     thermalUrl: string

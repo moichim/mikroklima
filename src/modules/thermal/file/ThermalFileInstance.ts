@@ -109,7 +109,7 @@ export class ThermalFileInstance extends EventTarget implements IThermalInstance
         this.root.style.borderWidth = "2px";
         this.root.style.borderStyle = "solid";
         this.root.style.borderColor = "transparent";
-        this.root.style.margin = "-1px";
+        // this.root.style.margin = "-1px";
         this.root.style.transition = "border-color .1s ease-in-out";
         this.root.style.zIndex = "10";
 
