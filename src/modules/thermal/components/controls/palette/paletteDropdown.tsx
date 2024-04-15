@@ -1,5 +1,6 @@
 "use client";
 
+import { useThermalManagerContext } from "@/modules/thermal/context/thermalManagerContext";
 import { useThermalObjectPurpose } from "@/modules/thermal/context/useThermalObjectPurpose";
 import { ThermalRegistry } from "@/thermal/registry/ThermalRegistry";
 import { useThermalRegistryPaletteDrive } from "@/thermal/registry/properties/drives/palette/useThermalRegistryPaletteDrive";
@@ -18,7 +19,7 @@ export const PaletteDropdown: React.FC<PaletteControlProps> = ({
 
     const ID = useThermalObjectPurpose( registry, "paletteDropdown" );
 
-    const palette = useThermalRegistryPaletteDrive(registry, ID);
+    const palette = useThermalRegistryPaletteDrive(ID);
 
     const { value: loading } = useThermalRegistryLoadingState(registry, ID);
 
@@ -29,7 +30,7 @@ export const PaletteDropdown: React.FC<PaletteControlProps> = ({
             className={cn("border-2 border-gray-300 border-dashed p-3 rounded-xl text-primary-500 gap-4 flex")}
         >
             <Spinner size="sm" />
-            <span>Barevné palety</span>
+            <span>Palety</span>
         </div>
     }
 

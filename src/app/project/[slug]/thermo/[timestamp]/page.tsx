@@ -34,25 +34,13 @@ const DetailPage = async (
             from={imagesFrom}
             to={imagesTo}
         />
-
-        <div className="text-center">
-
-            {TimeFormat.humanRangeDates(imagesFrom, imagesTo)}
-            <div>
-                {imagesFrom}
-            </div>
-            <div>
-                {imagesTo}
-            </div>
-
-        </div>
         <GraphContextProvider>
             <GraphWithFixedTime
                 defaultGraphs={["temperature", "radiance", "humidity"]}
                 scope={scope}
                 hasZoom={false}
-                from={imagesFrom}
-                to={imagesTo}
+                from={imagesTo}
+                to={imagesFrom}
             />
         </GraphContextProvider>
     </div>

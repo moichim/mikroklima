@@ -1,4 +1,5 @@
 import { WeatherProperty } from "@/graphql/weather/definitions/properties"
+import { GraphDataType } from "./dataMapping"
 
 /** Graph data */
 
@@ -18,7 +19,7 @@ export type DataGraphResponseSerieType = {
     sourceSlug: string,
     /** Identifies the data key in the global data object */
     dataKey: string,
-    isLine: boolean,
+    type: GraphDataType,
     in: WeatherProperty,
 
 }
@@ -31,7 +32,12 @@ export type DataGraphResponseType = {
         }
     },
 
-    data: DataGraphResponseEntryType[]
+    data: DataGraphResponseEntryType[],
+    images: {
+        [index:number]: {
+            [index:string]: number
+        }
+    }
 
 }
 

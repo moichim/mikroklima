@@ -72,15 +72,19 @@ export const ProjectController: React.FC<ProjectDisplayProps> = props => {
 
         const max = Object.values( projectDescription ).reduce( (state, current) => {
 
-            if ( current.files.length > state && current.files.length < 4 ) {
-                return current.files.length;
+            if ( current.files.length > state ) {
+                return current.files.length < 4 
+                    ? current.files.length
+                    : 4;
             }
 
             return state;
 
         }, 0 );
 
-        setPanelWidth( max );
+        if ( max > 0 ) {
+            setPanelWidth( max );
+        }
 
     }, [projectDescription]);
 
@@ -98,7 +102,7 @@ export const ProjectController: React.FC<ProjectDisplayProps> = props => {
                 </div>
                 <OpacitySlider registry={registry} className="md:w-60" />
                 <PaletteDropdown registry={registry} />
-                <PanelWidthDropdown current={panelWidth} onUpdate={setPanelWidth} />
+                <PanelWidthDropdown current={panelWidth} onUpdate={setPanelWidth} registry={registry}/>
             </>}
         />
 

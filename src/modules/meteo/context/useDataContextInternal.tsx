@@ -1,14 +1,7 @@
-import { GoogleColumn, GoogleColumnStats, GoogleScope } from "@/graphql/google/google";
+import { GoogleColumnStats } from "@/graphql/google/google";
 import { AvailableWeatherProperties, WeatherProperty } from "@/graphql/weather/definitions/properties";
-import { WeatherSourceType } from "@/graphql/weather/definitions/source";
-import { StackActions } from "@/modules/graph/reducerInternals/actions";
+import { DataGraphResponseEntryType, DataGraphResponseSerieType } from "@/modules/data/graphql/interfaces";
 import { GraphDomain, GraphInstanceScales, GraphInstanceState } from "@/modules/graph/reducerInternals/storage";
-import { useGraphInternal } from "@/modules/graph/useGraphInternal";
-import { BufferEntryType } from "@/modules/meteo/processors/responseProcessing";
-import { useMemo } from "react";
-import { useData } from "../useData";
-import { useGraphContext } from "@/modules/graph/graphContext";
-import { DataGraphResponseEntryType, DataGraphResponseSerieType, DataGraphResponseType } from "@/modules/data/graphql/interfaces";
 
 export type GraphInstanceHeightSetter = (height: GraphInstanceScales) => void;
 
@@ -22,6 +15,12 @@ export type GraphInstanceProps = {
     graphResourcesMap?: {
         [index: string]: DataGraphResponseSerieType
     }
+
+    images?: {
+        [index:number]: {
+            [index:string]: number
+        }
+    },
 
     viewStats?: GoogleColumnStats[],
     viewStatsLoading: boolean,

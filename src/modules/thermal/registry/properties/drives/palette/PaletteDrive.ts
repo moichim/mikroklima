@@ -1,5 +1,5 @@
 import { ThermalPalettes } from "@/modules/thermal/file/palettes";
-import { ThermalRegistry } from "../../../ThermalRegistry";
+import { ThermalManager } from "../../../ThermalManager";
 import { AbstractProperty, IBaseProperty } from "../../abstractProperty";
 
 export type PaletteId = keyof typeof ThermalPalettes;
@@ -8,7 +8,7 @@ export interface IWithPalette extends IBaseProperty {
     palette: PaletteDrive
 }
 
-export class PaletteDrive extends AbstractProperty< PaletteId, ThermalRegistry > {
+export class PaletteDrive extends AbstractProperty< PaletteId, ThermalManager > {
 
     public get availablePalettes() {
         return ThermalPalettes;
@@ -33,7 +33,13 @@ export class PaletteDrive extends AbstractProperty< PaletteId, ThermalRegistry >
     protected afterSetEffect(value: PaletteId) {
 
         console.log( "Dostal jsem změnu palety", value );
-        this.parent.forEveryInstance( instance => instance.recievePalette(value) );
+
+        this.parent.forEveryRegistry( registry => {
+
+            registry.forEveryGroup( group => group.instances.forEveryInstance( instance => instance.recievePalette( value ) ) );
+
+        } );
+            
     }
 
     public setPalette( key: PaletteId ) {

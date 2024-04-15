@@ -11,6 +11,8 @@ import { useGraphViewInteractions } from "./useGraphViewInteractions";
 import { useGraphViewTicks } from "./useGraphViewTicks";
 import { TimeEventsType } from "@/modules/time/reducerInternals/actions";
 import { TimeStorageType } from "@/modules/time/reducerInternals/storage";
+import { GraphDataType } from "@/modules/data/graphql/dataMapping";
+import { TimeFormat } from "@/utils/timeUtils/formatting";
 
 type GraphViewProps = GraphInstanceProps & {
     height: number,
@@ -39,28 +41,8 @@ export const GraphView: React.FC<GraphViewProps> = props => {
     const formatTooltip = useCallback((value: number, property: any) => value.toFixed(3), []);
 
 
-    const selectingCursor = useMemo(() => {
+    console.log("obrázky", props.images);
 
-        if (timeState.isSelecting) {
-            if (timeState.selectionCursor) {
-                return <ReferenceLine
-                    x={timeState.selectionCursor}
-                    stroke="black"
-                />
-            }
-        }
-
-        if (timeState.selectionFrom !== undefined && timeState.selectionTo !== undefined) {
-            return <ReferenceArea
-                x1={timeState.selectionFrom}
-                x2={timeState.selectionTo}
-                fill="red"
-            />
-        }
-
-        return <></>
-
-    }, [timeState.isSelecting, timeState.selectionCursor, timeState.selectionFrom, timeState.selectionTo]);
 
     if (props.graphData === undefined) {
         return <div className="pl-[100px] pb-4 w-full h-full">
@@ -92,6 +74,18 @@ export const GraphView: React.FC<GraphViewProps> = props => {
 
                 <CartesianGrid strokeDasharray={"2 2"} />
 
+                {props.images && Object.entries(props.images).map(([time, entries]) => {
+
+                    return <ReferenceLine
+                        x={parseInt(time)}
+                        stroke="rgb(0, 112, 240)"
+                        key={time}
+                    />
+
+                })}
+
+
+
                 {(timeState.selectionFrom !== undefined && timeState.selectionTo !== undefined)
                     && <ReferenceArea
                         x1={timeState.selectionFrom}
@@ -104,7 +98,7 @@ export const GraphView: React.FC<GraphViewProps> = props => {
 
                 {(props.graphData && props.graphResourcesMap) && Object.values(props.graphResourcesMap).map(resource => {
 
-                    if (resource.isLine === true) {
+                    if (resource.type === GraphDataType.LINE) {
                         return <Line
                             key={resource.dataKey}
                             dataKey={resource.dataKey}
@@ -113,7 +107,7 @@ export const GraphView: React.FC<GraphViewProps> = props => {
                             isAnimationActive={false}
                             unit={" " + resource.unit}
                         />
-                    } else if (resource.isLine === false) {
+                    } else if (resource.type === GraphDataType.DOT) {
                         return <Line
                             key={resource.dataKey}
                             fill={resource.color}
@@ -128,16 +122,16 @@ export const GraphView: React.FC<GraphViewProps> = props => {
                     }
 
                     return <Line
-                            key={resource.dataKey}
-                            dataKey={resource.dataKey}
-                            stroke={resource.color}
-                            fill={resource.color}
-                            dot={true}
-                            isAnimationActive={false}
-                            unit={" " + resource.unit}
-                            connectNulls
-                            name={resource.name}
-                        />
+                        key={resource.dataKey}
+                        dataKey={resource.dataKey}
+                        stroke={resource.color}
+                        fill={resource.color}
+                        dot={true}
+                        isAnimationActive={false}
+                        unit={" " + resource.unit}
+                        connectNulls
+                        name={resource.name}
+                    />
 
                 })}
 
@@ -160,8 +154,42 @@ export const GraphView: React.FC<GraphViewProps> = props => {
                     isAnimationActive={false}
                     coordinate={{ x: cursor, y: 0 }}
                     cursor={{
-                        stroke: timeState.isSelecting ? "rgb(0, 112, 240)" : "black"
+                        stroke: timeState.isSelecting ? "black" : "black"
                     }}
+
+                    content={({ active, payload, label }) => {
+
+                        const images = props.images
+                            ? props.images[label] !== undefined
+                                ? props.images[label]
+                                : undefined
+                            : undefined;
+
+                        return <div className="bg-white border-1 border-solid border-gray-300 px-2 py-2 z-100 text-sm">
+                            <div className="pb-2 font-bold">{label && TimeFormat.human(parseInt(label))}</div>
+                            <div className="">
+                                {payload?.map(row => <div key={row.name}>
+                                    <div style={{ color: row.color }} className="pb-1">{row.value} {row.unit} - {row.name}</div>
+                                </div>)}
+                            </div>
+
+                            {images !== undefined && <div className="pt-3 text-primary-400">
+                                <div>Termogramy:</div>
+                                <ul className="list-disc ps-4">
+                                    {Object.entries(images).map(([name, time]) => {
+
+                                        return <li key={time}>
+                                            <span className="text-black">{name}</span> <span>
+                                                {TimeFormat.humanTime(time)}
+                                            </span>
+                                        </li>
+
+                                    })}
+                                </ul>
+                            </div>}
+                        </div>
+                    }}
+
                 />
 
                 {isSelectingLocal &&

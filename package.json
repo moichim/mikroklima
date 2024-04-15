@@ -21,7 +21,7 @@
     "@p5-wrapper/react": "^4.3.2",
     "@reactour/tour": "^3.6.1",
     "cross-fetch": "^4.0.0",
-    "date-fns": "^3.3.1",
+    "date-fns": "^3.4.0",
     "framer-motion": "^11.0.3",
     "googleapis": "^131.0.0",
     "graphql-tag": "^2.12.6",

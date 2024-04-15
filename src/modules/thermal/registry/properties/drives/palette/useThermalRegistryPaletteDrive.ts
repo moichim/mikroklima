@@ -4,39 +4,42 @@ import { ThermalPalette, ThermalPalettes } from "@/modules/thermal/file/palettes
 import { ThermalRegistry } from "@/thermal/registry/ThermalRegistry";
 import { useEffect, useMemo, useState } from "react";
 import { PaletteId } from "./PaletteDrive";
+import { ThermalManager } from "../../../ThermalManager";
+import { useThermalManagerContext } from "@/modules/thermal/context/thermalManagerContext";
 
 export const useThermalRegistryPaletteDrive = (
-    registry: ThermalRegistry,
     purpose: string
 ) => {
 
-    const [value, setValue] = useState<PaletteId>(registry.palette.value);
+    const manager = useThermalManagerContext();
 
-    const [palette, setPalette] = useState<ThermalPalette>(registry.palette.currentPalette);
+    const [value, setValue] = useState<PaletteId>(manager.palette.value);
+
+    const [palette, setPalette] = useState<ThermalPalette>(manager.palette.currentPalette);
 
 
     // Bind all the values to the local state
     useEffect(() => {
 
-        registry.palette.addListener(purpose, newValue => {
+        manager.palette.addListener(purpose, newValue => {
 
             setValue(newValue);
-            setPalette(registry.palette.currentPalette);
+            setPalette(manager.palette.currentPalette);
 
         });
 
-        return () => registry.palette.removeListener(purpose);
+        return () => manager.palette.removeListener(purpose);
 
-    }, [registry,value, setValue,palette,setPalette]);
+    }, [manager,value, setValue,palette,setPalette]);
 
 
     // The setter
-    const set = useMemo(() => registry.palette.setPalette.bind(registry.palette), [registry]);
+    const set = useMemo(() => manager.palette.setPalette.bind(manager.palette), [manager]);
 
 
     // When this unmounts, remove the listeners
     useEffect(() => {
-        return () => registry.palette.removeListener(purpose);
+        return () => manager.palette.removeListener(purpose);
     }, []);
 
 

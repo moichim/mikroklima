@@ -1,7 +1,7 @@
 import { GoogleScope, GoogleScopeData } from "@/graphql/google/google";
 import { WeatherResponse } from "@/graphql/weather/weather";
 import { MeteoResponseProcessor } from "@/modules/meteo/processors/responseProcessing";
-import { MeteoRequestType } from "@/modules/meteo/processors/query";
+import { MeteoQueryResponseType, MeteoRequestType } from "@/modules/meteo/processors/query";
 import { useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { useCallback, useMemo } from "react";
@@ -12,7 +12,7 @@ export const useGraphData = (
 ) => {
 
   // The query
-  const [fetchInternal, query] = useLazyQuery<DataQueryResponseType, MeteoRequestType>(QUERY, {
+  const [fetchInternal, query] = useLazyQuery<MeteoQueryResponseType, MeteoRequestType>(QUERY, {
 
     variables: {
       scope: scope.slug,
@@ -213,6 +213,20 @@ query Source($lat: Float!, $lon: Float!, $hasNtc: Boolean!, $from: Float, $to: F
       max
       avg
       count
+      description
+    }
+  }
+  scopeFiles(scope: $scope, from: $from, to: $to) {
+    files {
+      filename
+      timestamp
+      thermalUrl
+      visibleUrl
+    }
+    info {
+      slug
+      name
+      scope
       description
     }
   }

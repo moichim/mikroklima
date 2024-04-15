@@ -1,5 +1,6 @@
 import { ThermalFileSource } from "../file/ThermalFileSource";
 import { ThermalRegistry } from "./ThermalRegistry";
+import { PaletteDrive } from "./properties/drives/palette/PaletteDrive";
 
 export class ThermalManager extends EventTarget {
 
@@ -8,6 +9,10 @@ export class ThermalManager extends EventTarget {
     protected _registries: {
         [index: string]: ThermalRegistry
      } = {};
+
+     public forEveryRegistry( fn: ( ( registry: ThermalRegistry ) => any ) ) {
+        Object.values( this._registries ).forEach( registry => fn( registry ) );
+     }
 
     public addOrGetRegistry(
         id: string
@@ -29,6 +34,14 @@ export class ThermalManager extends EventTarget {
             delete this._registries[id];
         }
     }
+
+
+
+    /** The palette is stored absolutely globally */
+    /**
+     * Palette
+     */
+    public readonly palette: PaletteDrive = new PaletteDrive(this, "jet");
 
 
 

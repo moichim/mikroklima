@@ -17,13 +17,15 @@ import { HistogramFullButton } from "../histogram/settings/histogramFullButton";
 type ThermalRangeProps = SliderProps & {
     registry: ThermalRegistry,
     rangeOffset?: number,
-    histogramBorder?: boolean
+    histogramBorder?: boolean,
+    histogramPrecision?: number
 }
 
 export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
     registry,
     rangeOffset = 0,
     histogramBorder = true,
+    histogramPrecision = 50,
     ...props
 }) => {
 
@@ -38,7 +40,7 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
     const { value: range, set: setRange } = useThermalRegistryRangeDrive(registry, ID);
 
     // Palette
-    const { availablePalettes, value: currentPaletteSlug, palette: currentPalette } = useThermalRegistryPaletteDrive(registry, ID);
+    const { availablePalettes, value: currentPaletteSlug, palette: currentPalette } = useThermalRegistryPaletteDrive(ID);
 
     // Loading
     const { value: loading } = useThermalRegistryLoadingState(registry, ID);

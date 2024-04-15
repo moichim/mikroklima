@@ -40,70 +40,66 @@ export const TimeGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
 
 
             <div className={panelWidth}>
-                {instances.value.map(instance => <>
+                {instances.value.map(instance => <ThermalInstance
+                    instance={instance}
+                    key={instance.id}
+                    highlightColor="black"
+                    syncTimeHighlight={false}
+                    highlightOnHover={false}
+                    showDateOnHighlight={false}
+                    hasPopup={true}
+                    scopeId={props.scopeId}
+                    columns={props.columns}
+                >
 
-                    <ThermalInstance
-                        instance={instance}
-                        key={instance.id}
-                        highlightColor="black"
-                        syncTimeHighlight={false}
-                        highlightOnHover={false}
-                        showDateOnHighlight={false}
-                        hasPopup={true}
-                        scopeId={props.scopeId}
-                        columns={props.columns}
-                    >
+                    <div className="w-full px-4 pt-3 pb-2 flex flex-wrap text-xs gap-3">
 
-                        <div className="w-full px-4 pt-3 pb-2 flex flex-wrap text-xs gap-3">
+                        <span>
+                            {TimeFormat.humanTime(instance.timestamp, true)}
+                        </span>
 
-                            <span>
-                                {TimeFormat.humanTime(instance.timestamp, true)}
-                            </span>
+                        <span className={cn(
+                            "text-gray-400",
+                            props.columns >= 4 && "hidden"
+                        )}>
 
-                            <span className={cn(
-                                "text-gray-400",
-                                props.columns >= 4 && "hidden"
-                            )}>
+                            {minmax !== undefined
+                                ? <>
+                                    {instance.min.toFixed(2)} — {instance.max.toFixed(2)} °C
+                                </>
+                                : "načítám"
+                            }
+                        </span>
 
-                                {minmax !== undefined
-                                    ? <>
-                                        {instance.min.toFixed(2)} — {instance.max.toFixed(2)} °C
-                                    </>
-                                    : "načítám"
-                                }
-                            </span>
+                        <span className={cn(
+                            "text-gray-300",
+                            props.columns >= 3 && "hidden"
+                        )}>
 
-                            <span className={cn(
-                                "text-gray-300",
-                                props.columns >= 3 && "hidden"
-                            )}>
+                            {minmax !== undefined
+                                ? <>
+                                    {instance.width} x {instance.height} px
+                                </>
+                                : "načítám"
+                            }
+                        </span>
 
-                                {minmax !== undefined
-                                    ? <>
-                                        {instance.width} x {instance.height} px
-                                    </>
-                                    : "načítám"
-                                }
-                            </span>
+                        <span className={cn(
+                            "text-gray-300",
+                            props.columns >= 2 && "hidden"
+                        )}>
 
-                            <span className={cn(
-                                "text-gray-300",
-                                props.columns >= 2 && "hidden"
-                            )}>
+                            {minmax !== undefined
+                                ? <>
+                                    {instance.signature}
+                                </>
+                                : "načítám"
+                            }
+                        </span>
 
-                                {minmax !== undefined
-                                    ? <>
-                                        {instance.signature}
-                                    </>
-                                    : "načítám"
-                                }
-                            </span>
+                    </div>
 
-                        </div>
-
-                    </ThermalInstance>
-
-                </>
+                </ThermalInstance>
 
                 )}
             </div>

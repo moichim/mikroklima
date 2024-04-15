@@ -1,9 +1,7 @@
 "use client";
 
-import { AvailableWeatherProperties } from "@/graphql/weather/definitions/properties"
-import { GraphCommonProps, GraphInternal } from "./GraphInternal"
-import { useTimeContext } from "@/modules/time/timeContext"
-import { useGraphTimeFixed } from "../../hooks/useGraphTime"
+import { useGraphTimeFixed } from "../../hooks/useGraphTime";
+import { GraphCommonProps, GraphInternal } from "./GraphInternal";
 
 type GraphWithGlobalTimeProps = GraphCommonProps & {
     from: number,
@@ -17,6 +15,8 @@ export const GraphWithFixedTime: React.FC<GraphWithGlobalTimeProps> = ({
 }) => {
 
     const context = useGraphTimeFixed( to, from );
+
+    console.log( from - to );
 
     return <GraphInternal 
         {...props}

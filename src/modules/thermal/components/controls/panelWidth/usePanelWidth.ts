@@ -11,7 +11,7 @@ export const usePanelWidth = (
         if ( typeof gap === "number" ) {
 
             if ( gap <= 0 ) {
-                return "";
+                return "gap-[2px]";
             } else if ( gap === 1 ) {
                 return "gap-[1px]";
             } else if ( gap === 2 ) {
@@ -30,7 +30,7 @@ export const usePanelWidth = (
     const widthClass = useMemo(() => {
 
         if ( columns <= 1 ) {
-            return cn( "grid-cols-1" );
+            return cn( "grid-cols-1", gapClass );
         } else if ( columns === 2 ) {
             return cn( "grid-cols-2", gapClass );
         } else if ( columns === 3 ) {

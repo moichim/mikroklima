@@ -3,6 +3,13 @@ import { DataGraphResponseEntryType, DataGraphResponseSerieType, DataGraphRespon
 import { storeKeyNameFromField } from "@apollo/client/utilities";
 import { AvailableWeatherProperties, Properties } from "@/graphql/weather/definitions/properties";
 import { Sources } from "@/graphql/weather/definitions/source";
+import {roundToNearestHours} from "date-fns";
+
+export enum GraphDataType {
+    LINE = "line",
+    DOT = "dot",
+    IMAGE = "thermalimage"
+}
 
 export class DataMapping {
 
@@ -16,12 +23,12 @@ export class DataMapping {
 
 
     static getKey(
-        isLine: boolean,
+        type: GraphDataType,
         source: string,
         property: string
     ) {
         return [
-            isLine ? "line" : "dot",
+            type,
             source,
             property
         ].join( DataMapping.KEY_SEPARATOR );
@@ -59,14 +66,14 @@ export class DataMapping {
 
     /** Add a graph time entry record to the buffer */
     protected addGraphDataEntry(
-        isLine: boolean,
+        type: GraphDataType,
         time: number,
         source: string,
         property: string,
         value: number
     ) {
 
-        const ID = DataMapping.getKey( isLine, source, property );
+        const ID = DataMapping.getKey( type, source, property );
 
         if ( time.toString() in this.bufGraphDataByTime ) {
             this.bufGraphDataByTime[time][ID] = value
@@ -88,7 +95,7 @@ export class DataMapping {
 
 
     protected addGraphResource(
-        isLine: boolean,
+        type: GraphDataType,
         property: string,
         source_slug: string,
         name: string,
@@ -98,9 +105,9 @@ export class DataMapping {
     ) {
 
         const getResource = (): DataGraphResponseSerieType => ({
-            isLine,
+            type,
             sourceSlug: source_slug,
-            dataKey: DataMapping.getKey( isLine, source_slug, property ),
+            dataKey: DataMapping.getKey( type, source_slug, property ),
             name: name,
             color,
             unit,
@@ -127,6 +134,31 @@ export class DataMapping {
 
     }
 
+    protected thermograms: {
+        [index:number]: {
+            [index:string]: number
+        }
+    } = {};
+
+    protected addThermogram(
+        timestamp: number,
+        groupName: string
+    ) {
+
+        const roundedTimestamp = roundToNearestHours( timestamp ).getTime();
+
+        if (roundedTimestamp.toString() in this.thermograms ) {
+
+            this.thermograms[ roundedTimestamp ][ groupName ] = timestamp;
+
+        } else {
+            this.thermograms[ roundedTimestamp ] = {
+                [groupName]: timestamp
+            }
+        }
+
+    }
+
 
 
     protected mapGraphResponse(): void {
@@ -135,8 +167,6 @@ export class DataMapping {
 
             const source = entry.source;
             const entries = entry.entries;
-
-
 
             entries.forEach(item => {
 
@@ -151,9 +181,9 @@ export class DataMapping {
 
                         const property = Properties.one( key as AvailableWeatherProperties );
 
-                        this.addGraphDataEntry(true, item.time, source.slug, key, value);
+                        this.addGraphDataEntry(GraphDataType.LINE, item.time, source.slug, key, value);
 
-                        this.addGraphResource( true, key, source.slug, source.name, source.color, property.unit ?? "___", source.description );
+                        this.addGraphResource( GraphDataType.LINE, key, source.slug, source.name, source.color, property.unit ?? "___", source.description );
 
                     });
 
@@ -166,13 +196,26 @@ export class DataMapping {
 
             column.values.forEach(value => {
 
-                this.addGraphDataEntry(false, value.time, column.slug, column.in.slug, value.value);
+                this.addGraphDataEntry(GraphDataType.DOT, value.time, column.slug, column.in.slug, value.value);
 
-                this.addGraphResource( false, column.in.slug, column.slug, column.name, column.color, column.in.unit ?? "___", column.description ?? "___" );
+                this.addGraphResource( GraphDataType.DOT, column.in.slug, column.slug, column.name, column.color, column.in.unit ?? "___", column.description ?? "___" );
 
             })
 
         });
+
+        this.response.scopeFiles.forEach( group => {
+
+            group.files.forEach( file => {
+
+                this.addThermogram( 
+                    file.timestamp * 1000,
+                    group.info.name
+                );
+
+            } );
+
+        } );
 
 
 
@@ -182,8 +225,11 @@ export class DataMapping {
 
         this.mapGraphResponse();
 
+        const mappedFromBuffer = this.getGraphDataFromBuffer();
+
         return {
-            data: this.getGraphDataFromBuffer(),
+            data: mappedFromBuffer,
+            images: this.thermograms,
             resourcesMap: this.bufGraphResorcesByProperty
         }
 

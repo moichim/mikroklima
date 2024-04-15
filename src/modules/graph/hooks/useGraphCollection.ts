@@ -83,6 +83,8 @@ export const useGraphCollection = (
                 ? graphData.data.resourcesMap[instance.property.slug]
                 : undefined;
 
+            const images = graphData.data?.images;
+
 
 
             // View Statistics
@@ -173,6 +175,7 @@ export const useGraphCollection = (
 
             return {
                 graphData: gd,
+                images,
                 graphResourcesMap: gr,
                 state,
                 setProperty,
@@ -184,7 +187,7 @@ export const useGraphCollection = (
                 viewStats: vs,
                 viewStatsLoading,
                 selectionStats: ss,
-                selectionStatsLoading
+                selectionStatsLoading,
             }
 
         } );

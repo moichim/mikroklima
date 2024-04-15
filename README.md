@@ -39,6 +39,16 @@ Servisní účet musí mít access k Sheets API a k Docs API.
 - date-fns
 
 ## Roadplan
+- API by mělo vracet odpověď rovnou ve formátu nutném pro zobrazení (aby GraphQL bralo pouze odpověď a nic dalšího)
+- highlight jde po dnech, nikoliv po měsících
+- veškeré vykreslování by mělo běžet v Reactu (mezivrstva je zbytečná)
+
+Vykreslování:
+Context:
+- fetchuje obsah
+- instancuje grupy
+
+
 
 - implementovat Open Meteo přesněji
     - v současné době fetchujeme archiv předpovědi počasí, která je dostupná pouze 3 měsíce zpětně

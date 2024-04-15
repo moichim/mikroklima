@@ -198,7 +198,7 @@ export class ThermalRegistry implements IThermalRegistry {
     /**
      * Palette
      */
-    public readonly palette: PaletteDrive = new PaletteDrive(this, "jet");
+    public readonly palette = this.manager.palette;
 
 
     /**

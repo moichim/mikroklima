@@ -37,7 +37,7 @@ export type ProjectDescription = {
     [index: string]: ProjectFolderDefinition
 }
 
-type ProjectFilesQueryResponse = {
+export type ProjectFilesQueryResponse = {
     scopeFiles: {
         info: ThermoFileScope,
         files: ThermoFileDefinition[]

@@ -78,7 +78,7 @@ export const TimeController: React.FC<TimeControllerProps> = ({ ...props }) => {
                 </div>
                 <OpacitySlider registry={registry} className="md:w-60" />
                 <PaletteDropdown registry={registry} />
-                <PanelWidthDropdown current={panelWidth} onUpdate={setPanelWidth} />
+                <PanelWidthDropdown current={panelWidth} onUpdate={setPanelWidth} registry={registry}/>
             </>}
             closeLink={`/project/${props.scopeId}/thermo`}
             closeLinkHint="Zpět na přehled všech termogramů"

@@ -44,7 +44,7 @@ export const TimeDisplay: React.FC<RegistryDisplayProps> = props => {
 
 
     if (loading.value === true) {
-        return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4 border-2 border-dashed border-gray-400">
+        return <div className="min-h-1/3 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4 border-2 border-dashed border-gray-400">
             <Progress
                 size="sm"
                 isIndeterminate
