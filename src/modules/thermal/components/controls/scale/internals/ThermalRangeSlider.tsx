@@ -13,12 +13,14 @@ import { useThermalObjectPurpose } from "@/modules/thermal/context/useThermalObj
 import { Histogram } from "../histogram/histotgram";
 import { HistogramAutoButton } from "../histogram/settings/histogramAutoButton";
 import { HistogramFullButton } from "../histogram/settings/histogramFullButton";
+import { useMarks } from "./useMarks";
 
 type ThermalRangeProps = SliderProps & {
     registry: ThermalRegistry,
     rangeOffset?: number,
     histogramBorder?: boolean,
-    histogramPrecision?: number
+    histogramPrecision?: number,
+    hasButtons?: boolean
 }
 
 export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
@@ -26,10 +28,11 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
     rangeOffset = 0,
     histogramBorder = true,
     histogramPrecision = 50,
+    hasButtons = true,
     ...props
 }) => {
 
-    const ID = useThermalObjectPurpose( registry, "temperatureScaleBase" );
+    const ID = useThermalObjectPurpose(registry, "temperatureScaleBase");
 
     // Global properties
 
@@ -138,16 +141,46 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
         const bg = props.index === 0
             ? currentPalette.pixels[0]//"bg-black"
             : currentPalette.pixels[255]//"bg-white";
+
+        const label = props.index === 0
+            ? "Minimální zobrazená teplota"
+            : "Maximální zobrazená teplota";
+
         return (<div
             {...props}
-            className={"group p-1 top-1/2 bg-gray-700 border-tiny border-default-200 rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"}
-            aria-label="some label"
+            className={"group p-[2px] top-1/2 rounded bg-gray-500 border-tiny border-default-200 cursor-grab data-[dragging=true]:cursor-grabbing z-[100]"}
+            aria-label={label}
         >
-            <span className={"transition-transform rounded-full w-6 h-6 block group-data-[dragging=true]:scale-80"}
+            <span className={"transition-transform w-2 h-6 block group-data-[dragging=true]:scale-80"}
                 style={{ backgroundColor: bg }}
             />
+
+            {(value[0] !== -Infinity && value[1] !== Infinity) &&
+
+                <span
+                    className="absolute w-0 z-10 top-8 text-xs text-center"
+                    style={{ zIndex: 10000 }}
+                >
+
+                    <span
+                        className="w-2 h-2 absolute -top-1 rotate-45 bg-gray-500"
+                    ></span>
+                    <span
+                        className="absolute block w-10 -left-4 border-[2px] border-gray-500 border-solid rounded text-center bg-black"
+                        style={{ zIndex: 10000 }}
+                    >
+
+                        <span
+                            className=" text-white text-center"
+                        >{props.index === 0 ? value[0].toFixed(1) : value[1].toFixed(1)}</span>
+
+                    </span>
+                </span>
+
+            }
+
         </div>)
-    }, [currentPalette]);
+    }, [currentPalette, value]);
 
 
 
@@ -160,6 +193,8 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
         return Math.round(minmax.max - minmax.min) / 50;
 
     }, [minmax]);
+
+    const marks = useMarks(minmax);
 
 
     const fillerClass = useMemo(() => {
@@ -206,7 +241,7 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
 
                 <div className="w-full h-10 px-4">
 
-                    <Histogram 
+                    <Histogram
                         registry={registry}
                         hasBorder={histogramBorder}
                     />
@@ -236,10 +271,11 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
                     color="foreground"
                     classNames={{
                         base: "px-1 min-w-screen",
-                        mark: "bg-black",
-                        track: "bg-gray-400 h-6 cursor-pointer",
+                        mark: "text-xs top-4 z-0",
+                        track: "bg-gray-400 h-5 cursor-pointer",
                         filler: fillerClass,
-                        label: "text-xl"
+                        label: "text-xl",
+                        thumb: "z-100 bg-yellow-500"
                     }}
 
 
@@ -261,13 +297,17 @@ export const TemperatureScaleBase: React.FC<ThermalRangeProps> = ({
                             </Tooltip>
                         </label>
                     )}
-                    showTooltip
+                    //showTooltip
+                    marks={marks}
                 />
 
             </div>
-
-            <HistogramFullButton registry={registry} />
-            <HistogramAutoButton registry={registry} minHeight={3}/>
+            {hasButtons === true &&
+                <>
+                    <HistogramFullButton registry={registry} />
+                    <HistogramAutoButton registry={registry} minHeight={3} />
+                </>
+            }
 
         </div>
 

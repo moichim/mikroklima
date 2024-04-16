@@ -11,6 +11,8 @@ import { RegistryDisplay } from "../project/registryDisplay";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
 import { TimeDisplay } from "./timeDisplay";
 import { PanelWidthDropdown } from "../../controls/panelWidth/panelWidthDropdown";
+import { useExportImage } from "@/utils/exports/useExportImage";
+import { Button } from "@nextui-org/react";
 
 type TimeControllerProps = {
     scopeId: string,
@@ -62,14 +64,31 @@ export const TimeController: React.FC<TimeControllerProps> = ({ ...props }) => {
 
     }, [projectDescription]);
 
+    const [isPrinting, setIsPrinting] = useState<boolean>(false);
+
+    const { download, printingState } = useExportImage(
+        `#export`,
+        () => {
+            return [
+                "ahoj"
+            ].join(" - ");
+        },
+        () => {
+            setIsPrinting(true);
+        },
+        () => {
+            setIsPrinting(false);
+        }
+    );
+
     
 
 
-    return <>
+    return <div>
 
         <Navbar
             className="bg-slate-200"
-            height="6rem"
+            height="7rem"
             innerContent={<>
                 <div className="flex-grow w-3/4">
                     <TemperatureScaleBase
@@ -98,5 +117,5 @@ export const TimeController: React.FC<TimeControllerProps> = ({ ...props }) => {
             <TimeDisplay registry={registry} scopeId={props.scopeId} columns={panelWidth} />
         </div >
 
-    </>
+    </div>
 }

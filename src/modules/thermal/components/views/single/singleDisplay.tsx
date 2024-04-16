@@ -5,13 +5,15 @@ import { useThermalRegistryGroups } from "@/modules/thermal/registry/properties/
 import { ThermalRegistry } from "@/thermal/registry/ThermalRegistry";
 import { useThermalRegistryLoadingState } from "@/thermal/registry/properties/states/loading/useThermalRegistryLoadingState";
 import { Spinner } from "@nextui-org/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ThermalInstanceDisplayParameters } from "../../instance/thermalInstance";
 import { SingleInstanceDetail } from "./detail/singleInstanceDetail";
+import { useExportImage } from "@/utils/exports/useExportImage";
 
 type SingleDisplayProps = ThermalInstanceDisplayParameters & {
     registry: ThermalRegistry,
-    hasDownloadButtons?: boolean
+    hasDownloadButtons?: boolean,
+    name: string
 }
 
 
@@ -25,6 +27,8 @@ export const SingleDisplay: React.FC<SingleDisplayProps> = ({
     highlightColor = undefined,
     highlightOnHover = true,
     forceHighlight = false,
+
+    name,
 
     ...props
 }) => {
@@ -47,7 +51,7 @@ export const SingleDisplay: React.FC<SingleDisplayProps> = ({
         </>
     }
 
-    return <>
+    return <div id={ID}>
         {groups.value
             .map(group => <div
                 className=""
@@ -56,6 +60,8 @@ export const SingleDisplay: React.FC<SingleDisplayProps> = ({
                 {group.instances.value
                     .map(instance => <div className="" key={instance.id}>
                         <SingleInstanceDetail
+
+                            name={name}
 
                             instance={instance}
                             hasDownloadButtons={hasDownloadButtons}
@@ -76,6 +82,6 @@ export const SingleDisplay: React.FC<SingleDisplayProps> = ({
             )
 
         }
-    </>
+    </div>
 
 }

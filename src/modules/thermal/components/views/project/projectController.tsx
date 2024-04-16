@@ -93,7 +93,7 @@ export const ProjectController: React.FC<ProjectDisplayProps> = props => {
 
         <Navbar
             className="bg-slate-200"
-            height="6rem"
+            height="7rem"
             innerContent={<>
                 <div className="flex-grow w-3/4">
                     <TemperatureScaleBase

@@ -10,7 +10,8 @@ type SingleDisplayProps = ThermalInstanceDisplayParameters & {
     thermalUrl: string
     visibleUrl?: string,
     registryId?: string,
-    hasDownloadButtons?: boolean
+    hasDownloadButtons?: boolean,
+    name: string
 }
 
 export const SingleController: React.FC<SingleDisplayProps> = ({
@@ -26,6 +27,8 @@ export const SingleController: React.FC<SingleDisplayProps> = ({
     highlightColor = undefined,
     highlightOnHover = true,
     forceHighlight = false,
+
+    name,
 
     ...props
 }) => {
@@ -64,6 +67,8 @@ export const SingleController: React.FC<SingleDisplayProps> = ({
 
 
     return <SingleDisplay
+
+        name={name}
 
         registry={registry}
         hasDownloadButtons={hasDownloadButtons}

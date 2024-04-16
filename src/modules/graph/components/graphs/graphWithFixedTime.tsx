@@ -16,8 +16,6 @@ export const GraphWithFixedTime: React.FC<GraphWithGlobalTimeProps> = ({
 
     const context = useGraphTimeFixed( to, from );
 
-    console.log( from - to );
-
     return <GraphInternal 
         {...props}
         state={context.state}

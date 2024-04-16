@@ -4,7 +4,7 @@ import { GraphInstanceProps } from "@/modules/meteo/context/useDataContextIntern
 import { TimeEventsFactory, TimeEventsType } from "@/modules/time/reducerInternals/actions";
 import { TimeStorageType } from "@/modules/time/reducerInternals/storage";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
-import { Dispatch, useMemo } from "react";
+import { Dispatch, useMemo, useRef } from "react";
 import { graphInstanceHeights } from "../../reducerInternals/storage";
 import { GraphinstanceSelector } from "./internals/graphInstanceSelector";
 import { GraphInstanceSizes } from "./internals/graphInstanceSizes";

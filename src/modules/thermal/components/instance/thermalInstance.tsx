@@ -189,6 +189,8 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
 
                             <SingleController
 
+                                name={instance.group.name ?? instance.group.id}
+
                                 thermalUrl={instance.url}
                                 visibleUrl={instance.visibleUrl}
 
@@ -202,10 +204,6 @@ export const ThermalInstance: React.FC<ThermalInstanceProps> = ({
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <SingleInstanceDownloadButtons
-                                thermalUrl={instance.url}
-                                visibleUrl={instance.visibleUrl}
-                            />
                             <Button
                                 onClick={onClose}
                                 color="primary"
