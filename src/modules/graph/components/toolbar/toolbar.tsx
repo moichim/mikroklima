@@ -5,6 +5,7 @@ import { StackActions } from "@/modules/graph/reducerInternals/actions"
 import { GraphToolType, graphTools } from "@/modules/graph/data/tools"
 import { Button, Tooltip, cn } from "@nextui-org/react"
 import React, { useCallback, useMemo } from "react"
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 
 
 const Tool: React.FC<GraphToolType> = props => {
@@ -49,7 +50,7 @@ const Tool: React.FC<GraphToolType> = props => {
     </Tooltip>
 }
 
-type ToolbarProps = {
+type ToolbarProps = React.PropsWithChildren & {
     hasZoom?: boolean
 }
 
@@ -76,6 +77,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             key={tool.name}
             {...tool}
         />)}
+        {props.children}
     </div>
 
 }

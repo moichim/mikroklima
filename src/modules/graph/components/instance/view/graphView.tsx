@@ -41,9 +41,6 @@ export const GraphView: React.FC<GraphViewProps> = props => {
     const formatTooltip = useCallback((value: number, property: any) => value.toFixed(3), []);
 
 
-    console.log("obrázky", props.images);
-
-
     if (props.graphData === undefined) {
         return <div className="pl-[100px] pb-4 w-full h-full">
             <div className="flex w-full h-full border-2 border-gray-400 border-dashed items-center justify-center">

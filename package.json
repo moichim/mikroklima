@@ -22,6 +22,7 @@
     "@types/html2canvas": "^1.0.0",
     "cross-fetch": "^4.0.0",
     "date-fns": "^3.4.0",
+    "excel-build": "^1.1.2",
     "framer-motion": "^11.0.3",
     "googleapis": "^131.0.0",
     "graphql-tag": "^2.12.6",

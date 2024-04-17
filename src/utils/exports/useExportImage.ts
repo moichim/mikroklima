@@ -1,6 +1,4 @@
-import * as htmlToImage from 'html-to-image'
-import { useToSvg, useToPng, useToJpeg } from "@hugocxl/react-to-image";
-import { RefObject } from 'react';
+import { useToPng } from "@hugocxl/react-to-image";
 
 export const useExportImage = (
     selector: string,
@@ -14,7 +12,7 @@ export const useExportImage = (
         selector: selector,
         onSuccess: data => {
             const link = document.createElement('a');
-            link.download = `${getFileName()}.jpg`;
+            link.download = `${getFileName()}.png`;
             link.href = data;
             link.click();
         }

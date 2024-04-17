@@ -31,6 +31,12 @@ export const RegistryDisplay: React.FC<RegistryDisplayProps> = props => {
 
     const {value} = useThermalRegistryMinmaxState( props.registry, ID );
 
+    useEffect( () => {
+
+        return () => props.registry.destroySelfInTheManager();
+        
+    }, [] );
+
 
     if (value === undefined) {
         return <div className="min-h-1/2 h-[50vh] flex w-full items-center justify-center flex-col text-cener text-primary gap-4">

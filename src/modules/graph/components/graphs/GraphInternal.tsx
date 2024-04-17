@@ -6,9 +6,13 @@ import { Toolbar } from "@/modules/graph/components/toolbar/toolbar";
 import { TimeSelectionBar } from "@/modules/time/components/timeSelectionBar";
 import { TimeEventsType } from "@/modules/time/reducerInternals/actions";
 import { TimeStorageType } from "@/modules/time/reducerInternals/storage";
+import { Button, Tooltip } from "@nextui-org/react";
 import { Dispatch } from "react";
 import { useGraphCollection } from "../../hooks/useGraphCollection";
 import { GraphInstanceNew } from "../instance/GraphInstanceNew";
+import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
+import { ExportButton } from "../../export/ExportButton";
+import { TimeFormat } from "@/utils/timeUtils/formatting";
 
 export type GraphCommonProps = {
     defaultGraphs: AvailableWeatherProperties[],
@@ -21,14 +25,12 @@ type GraphProps = GraphCommonProps & {
     dispatch: Dispatch<TimeEventsType>
 }
 
-export const GraphInternal: React.FC<GraphProps> = ( {
+export const GraphInternal: React.FC<GraphProps> = ({
     state,
     dispatch,
     hasZoom = false,
     ...props
-} ) => {
-
-    // const { state, dispatch } = useGraphTimeFixed( props.from, props.to );
+}) => {
 
     const collection = useGraphCollection(
         props.defaultGraphs,
@@ -39,9 +41,13 @@ export const GraphInternal: React.FC<GraphProps> = ( {
     );
 
     return <div className="relative">
-        
+
         <div className="pl-4 pt-4 fixed bottom-4" style={{ width: "4rem" }}>
-            <Toolbar hasZoom={hasZoom}/>
+            <Toolbar hasZoom={hasZoom}>
+
+                <ExportButton data={collection.graphData.data} getFileName={ () => `data_${props.scope.name}_${TimeFormat.human( state.from )}-${ TimeFormat.human( state.to )}` }/>
+
+            </Toolbar>
         </div>
 
         <div className=" top-0 w-full pt-4">
@@ -56,10 +62,10 @@ export const GraphInternal: React.FC<GraphProps> = ( {
                 })}
         </div>
 
-        <TimeSelectionBar 
-            hasZoom={hasZoom} 
-            state={state} 
-            dispatch={dispatch} 
+        <TimeSelectionBar
+            hasZoom={hasZoom}
+            state={state}
+            dispatch={dispatch}
         />
 
     </div>
