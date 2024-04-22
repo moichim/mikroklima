@@ -149,9 +149,10 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
                     scopeId={props.scopeId}
                     onClick={(i) => {
 
-                        const url = `/project/${props.scopeId}/thermo/${instance.timestamp + 1}`;
+                        const url = `/project/${props.scopeId}/thermo/moment/${instance.timestamp + 1}`;
 
                         router.push(url);
+                        
                     }}
                 />)}
 

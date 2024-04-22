@@ -1,11 +1,9 @@
 import { scopeProvider } from "@/graphql/scope/ScopeProvider";
 import { GraphWithFixedTime } from "@/modules/graph/components/graphs/graphWithFixedTime";
 import { GraphContextProvider } from "@/modules/graph/graphContext";
-import { TimeController } from "@/modules/thermal/components/views/time/timeController";
+import { TimeController } from "@/modules/thermal/components/views/moment/timeController";
 import { TimePeriod } from "@/modules/time/reducerInternals/actions";
-import { TimeFormat } from "@/utils/timeUtils/formatting";
 import { TimeRound } from "@/utils/timeUtils/rounding";
-import { addHours, subDays } from "date-fns";
 
 
 
