@@ -10,10 +10,12 @@ import { GraphinstanceSelector } from "./internals/graphInstanceSelector";
 import { GraphInstanceSizes } from "./internals/graphInstanceSizes";
 import { Statistics } from "./statistics/statistics";
 import { GraphView } from "./view/graphView";
+import { TemperatureHighlightType } from "@/modules/thermal/components/views/group/groupController";
 
 type GraphInstanceNewProps = GraphInstanceProps & {
     timeState: TimeStorageType,
-    timeDispatch: Dispatch<TimeEventsType>
+    timeDispatch: Dispatch<TimeEventsType>,
+    temperatureHighlight?: TemperatureHighlightType
 }
 
 export const GraphInstanceNew: React.FC<GraphInstanceNewProps> = props => {

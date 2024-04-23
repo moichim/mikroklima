@@ -22,8 +22,6 @@ export class MeteoResponseProcessor {
         response: MeteoQueryResponseType
     ) {
 
-        console.log( response.scopeFiles );
-
         return DataMapping.processGraph( response );
     }
 

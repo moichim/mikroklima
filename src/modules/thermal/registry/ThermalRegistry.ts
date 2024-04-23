@@ -1,6 +1,6 @@
 "use client";
 
-import { ProjectDescription } from "@/modules/thermal/context/useProjectLoader";
+import { ProjectDescription, ProjectFolderDefinition } from "@/modules/thermal/context/useProjectLoader";
 import { ThermalFileInstance } from "@/modules/thermal/file/ThermalFileInstance";
 import { ThermalManager } from "./ThermalManager";
 import { IThermalRegistry } from "./interfaces";
@@ -83,6 +83,33 @@ export class ThermalRegistry implements IThermalRegistry {
             this.postLoadedProcessing();
 
         }, 0);
+
+    }
+
+    public async loadGroupOfFiles(
+        groupId: string,
+        folderDefinition: ProjectFolderDefinition
+    ) {
+
+        this.reset();
+
+        const group = this.groups.addOrGetGroup( 
+            groupId, 
+            folderDefinition.name,
+            folderDefinition.description
+        );
+
+        this.loader.requestFiles( group, folderDefinition.files );
+
+        this.loading.markAsLoading();
+
+        setTimeout( async () => {
+
+            await this.loader.resolveQuery();
+
+            this.postLoadedProcessing();
+
+        }, 0 );
 
     }
 

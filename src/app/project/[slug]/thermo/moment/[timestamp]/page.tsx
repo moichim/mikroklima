@@ -10,13 +10,13 @@ import { TimeRound } from "@/utils/timeUtils/rounding";
 // export const dynamicParams = true;
 
 
-type DetailPageProps = {
+type MomentPageProps = {
     slug: string,
     timestamp: string
 }
 
-const DetailPage = async (
-    { params }: { params: DetailPageProps },
+const MomentPage = async (
+    { params }: { params: MomentPageProps },
 ) => {
 
     const scope = await scopeProvider.fetchScopeDefinition(params.slug);
@@ -44,4 +44,4 @@ const DetailPage = async (
     </div>
 }
 
-export default DetailPage;
+export default MomentPage;

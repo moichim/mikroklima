@@ -58,8 +58,8 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
         }
     );
 
-    return <div className="w-1/3 px-2">
-        <div className="bg-white rounded-t-xl" id={ID}>
+    return <div className="w-full px-2">
+        <div className="" id={ID}>
 
             <div className="p-4">
 
@@ -96,15 +96,15 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
                     }
 
                     {isPrinting === false && <Tooltip 
-                        content="Otevřít detail s poorovnáním teplot skupiny"
+                        content="Zavřít detail skupiny"
                         color="foreground"
                     >
                         <Button
                             size="sm"
                             variant="faded"
                             as={Link}
-                            href={`/project/${props.scopeId}/thermo/group/${props.group.id}`}
-                        >Detail</Button>
+                            href={`/project/${props.scopeId}/thermo`}
+                        >Zavřít</Button>
                     </Tooltip> }
 
                 </div>
@@ -158,15 +158,8 @@ export const ThermalGroupPanel: React.FC<ThermalGroupPanelProps> = props => {
                     syncTimeHighlight={true}
                     highlightOnHover={true}
                     showDateOnHighlight={true}
-                    hasPopup={false}
+                    hasPopup={true}
                     scopeId={props.scopeId}
-                    onClick={(i) => {
-
-                        const url = `/project/${props.scopeId}/thermo/moment/${instance.timestamp + 1}`;
-
-                        router.push(url);
-
-                    }}
                 />)}
 
             </div>

@@ -27,7 +27,7 @@ query Scopes($scope: String!, $from: Float, $to: Float) {
 
 `;
 
-type ProjectFolderDefinition = {
+export type ProjectFolderDefinition = {
     id: string,
     name: string,
     description?: string

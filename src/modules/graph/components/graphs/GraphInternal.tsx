@@ -13,11 +13,13 @@ import { GraphInstanceNew } from "../instance/GraphInstanceNew";
 import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
 import { ExportButton } from "../../export/ExportButton";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
+import { TemperatureHighlightType } from "@/modules/thermal/components/views/group/groupController";
 
 export type GraphCommonProps = {
     defaultGraphs: AvailableWeatherProperties[],
     hasZoom?: boolean,
     scope: GoogleScope,
+    temperatureHighlight?: TemperatureHighlightType
 }
 
 type GraphProps = GraphCommonProps & {
@@ -29,6 +31,7 @@ export const GraphInternal: React.FC<GraphProps> = ({
     state,
     dispatch,
     hasZoom = false,
+    temperatureHighlight,
     ...props
 }) => {
 
@@ -37,7 +40,8 @@ export const GraphInternal: React.FC<GraphProps> = ({
         props.scope,
         hasZoom,
         state,
-        dispatch
+        dispatch,
+        temperatureHighlight
     );
 
     return <div className="relative">
@@ -58,6 +62,7 @@ export const GraphInternal: React.FC<GraphProps> = ({
                         key={instance.state.property.slug}
                         timeState={state}
                         timeDispatch={dispatch}
+                        temperatureHighlight={temperatureHighlight}
                     />
                 })}
         </div>

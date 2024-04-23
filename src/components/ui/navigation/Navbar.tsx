@@ -15,12 +15,13 @@ import {
 import { NavbarLink, NavbarLinkDefinition } from "./NavbarLink";
 import { NavbarDesktopLinks } from "./NnavbarDesktopLinks";
 import { ArrowRightIcon, CloseIcon } from "@/components/ui/icons";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export type NavbarProps = React.PropsWithChildren & NextuiNavbarProps & {
     brandContent?: React.ReactNode,
     links?: NavbarLinkDefinition[],
     innerContent?: React.ReactNode,
+    underContent?: React.ReactNode,
     endContent?: React.ReactNode,
     closeLink?: string,
     closeLinkHint?: React.ReactNode
@@ -30,6 +31,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     closeLink,
     closeLinkHint,
     innerContent: content,
+    underContent,
     links,
     brandContent,
     endContent,
@@ -46,11 +48,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         {...props}
         className={cn(
             props.className,
-            "data-[menu-open=true]:z-50 group"
+            "data-[menu-open=true]:z-50 group flex-wrap"
         )}
         classNames={{
             ...props.classNames,
-            menu: cn(props.classNames?.menu, "group-data-[menu-open=true]:z-50", "z-50")
+            menu: cn(props.classNames?.menu, "group-data-[menu-open=true]:z-50", "z-50"),
+            wrapper: "flex-wrap"
         }}
         isMenuOpen={open}
         onMenuOpenChange={setOpen}
@@ -141,6 +144,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             </Tooltip>}
 
         </NavbarContent>}
+
+        {underContent && <div
+            className="w-full flex-grow block"
+        >
+            {underContent}
+        </div>}
 
     </NextuiNavbar>
 

@@ -30,8 +30,6 @@ export const useInstanceWidth = (
 
         const c = Math.round( Math.min( Math.max( columns, 0 ), 3 ) );
 
-        console.log( c );
-
         if ( c === 0 || c === 1 ) {
             setCols( 1 );
         } else if ( c === 2 ) {

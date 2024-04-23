@@ -15,6 +15,7 @@ export class GroupsState extends AbstractProperty<ThermalGroup[], ThermalRegistr
     public get map() { return this._map; }
 
     protected validate(value: ThermalGroup[]): ThermalGroup[] {
+        console.log( "interní změna hodnoty", value );
         return value;
     }
 
@@ -45,6 +46,8 @@ export class GroupsState extends AbstractProperty<ThermalGroup[], ThermalRegistr
 
         // Add the group to the value
         this.value.push( group );
+
+        this.value = this.value;
 
         return group;
     }

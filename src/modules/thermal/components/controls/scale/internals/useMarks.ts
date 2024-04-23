@@ -39,8 +39,6 @@ export const useMarks = (
         label: minmax.max.toFixed(1)
     });
 
-    console.log(marks);
-
     return marks;
 
 }

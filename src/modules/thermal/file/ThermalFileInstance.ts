@@ -330,6 +330,16 @@ export class ThermalFileInstance extends EventTarget implements IThermalInstance
 
     }
 
+    public getTemperatureAtPoint(
+        x: number,
+        y: number
+    ): number {
+
+        const index = ( y * this.width ) + x;
+        return this.pixels[ index ];
+
+    }
+
     /**
      * Range
      */

@@ -13,11 +13,14 @@ import { TimeEventsType } from "@/modules/time/reducerInternals/actions";
 import { TimeStorageType } from "@/modules/time/reducerInternals/storage";
 import { GraphDataType } from "@/modules/data/graphql/dataMapping";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
+import { TemperatureHighlightType } from "@/modules/thermal/components/views/group/groupController";
+import { LinePointItem } from "recharts/types/cartesian/Line";
 
 type GraphViewProps = GraphInstanceProps & {
     height: number,
     timeState: TimeStorageType,
-    dispatch: Dispatch<TimeEventsType>
+    dispatch: Dispatch<TimeEventsType>,
+    temperatureHighlight?: TemperatureHighlightType
 }
 
 export const GraphView: React.FC<GraphViewProps> = props => {
@@ -39,6 +42,7 @@ export const GraphView: React.FC<GraphViewProps> = props => {
     const formatLabel = useCallback((value: number) => stringLabelFromTimestamp(value), []);
 
     const formatTooltip = useCallback((value: number, property: any) => value.toFixed(3), []);
+
 
 
     if (props.graphData === undefined) {
@@ -131,6 +135,7 @@ export const GraphView: React.FC<GraphViewProps> = props => {
                     />
 
                 })}
+
 
 
                 <YAxis
