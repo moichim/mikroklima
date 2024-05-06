@@ -6,7 +6,7 @@ export class ThermalManager extends EventTarget {
 
     /* registries */
 
-    protected _registries: {
+    public readonly _registries: {
         [index: string]: ThermalRegistry
      } = {};
 

@@ -32,9 +32,11 @@ export class PaletteDrive extends AbstractProperty< PaletteId, ThermalManager > 
     /** Any changes to the value should propagate directly to every instance. */
     protected afterSetEffect(value: PaletteId) {
 
-        console.log( "Dostal jsem změnu palety", value );
+        console.log( "Dostal jsem změnu palety", value, this );
 
         this.parent.forEveryRegistry( registry => {
+
+            console.log( registry );
 
             registry.forEveryGroup( group => group.instances.forEveryInstance( instance => instance.recievePalette( value ) ) );
 

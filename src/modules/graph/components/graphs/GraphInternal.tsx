@@ -2,7 +2,7 @@
 
 import { GoogleScope } from "@/graphql/google/google";
 import { AvailableWeatherProperties } from "@/graphql/weather/definitions/properties";
-import { Toolbar } from "@/modules/graph/components/toolbar/toolbar";
+import { ToolsToolbar } from "@/modules/graph/components/toolbar/toolbar";
 import { TimeSelectionBar } from "@/modules/time/components/timeSelectionBar";
 import { TimeEventsType } from "@/modules/time/reducerInternals/actions";
 import { TimeStorageType } from "@/modules/time/reducerInternals/storage";
@@ -46,12 +46,12 @@ export const GraphInternal: React.FC<GraphProps> = ({
 
     return <div className="relative">
 
-        <div className="pl-4 pt-4 fixed bottom-4" style={{ width: "4rem" }}>
-            <Toolbar hasZoom={hasZoom}>
+        <div className="pl-4 pt-4 fixed bottom-4 z-40" style={{ width: "4rem" }}>
+            <ToolsToolbar hasZoom={hasZoom}>
 
-                <ExportButton data={collection.graphData.data} getFileName={ () => `data_${props.scope.name}_${TimeFormat.human( state.from )}-${ TimeFormat.human( state.to )}` }/>
+                <Tooltip content="Stáhnout meteorologická data jako XLS"><ExportButton data={collection.graphData.data} getFileName={ () => `data_${props.scope.name}_${TimeFormat.human( state.from )}-${ TimeFormat.human( state.to )}` }/></Tooltip>
 
-            </Toolbar>
+            </ToolsToolbar>
         </div>
 
         <div className=" top-0 w-full pt-4">

@@ -46,7 +46,7 @@ export const GraphView: React.FC<GraphViewProps> = props => {
 
 
     if (props.graphData === undefined) {
-        return <div className="pl-[100px] pb-4 w-full h-full">
+        return <div className="pl-[100px] pb-4 w-full h-full min-h-[300px] pt-3 pr-4">
             <div className="flex w-full h-full border-2 border-gray-400 border-dashed items-center justify-center">
                 <Progress
                     size="sm"
@@ -58,7 +58,7 @@ export const GraphView: React.FC<GraphViewProps> = props => {
         </div>
     }
 
-    return <div className="relative w-full">
+    return <div className="relative w-full pr-4 lg:pr-0 pt-4 lg:pt-0">
 
         <ResponsiveContainer
             width="100%"

@@ -1,7 +1,7 @@
 import { DataGraphResponseType } from "@/modules/data/graphql/interfaces";
 import { TimeFormat } from "@/utils/timeUtils/formatting";
 import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
-import { Button, ButtonProps } from "@nextui-org/react"
+import { Button, ButtonProps, Tooltip } from "@nextui-org/react"
 import { CellBuilder, FileBuilder, SheetBuilder } from 'excel-build';
 
 export type ExportButtonProps = ButtonProps & {
@@ -17,7 +17,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
 
 
 
-    return <Button
+    return <Tooltip content="Stáhnout meterologická data jako XLS" placement="right" color="foreground"><Button
         isIconOnly
         size="lg"
 
@@ -156,5 +156,5 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
     >
         <ArrowDownCircleIcon style={{ height: "2rem" }} />
     </Button>
-
+    </Tooltip>
 }

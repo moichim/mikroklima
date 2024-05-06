@@ -293,6 +293,7 @@ export class ThermalFileInstance extends EventTarget implements IThermalInstance
     public recievePalette(
         palette: string | number
     ) {
+        console.log( palette );
         this.draw();
     }
 

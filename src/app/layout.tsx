@@ -7,6 +7,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Providers } from '../components/providers'
 import './globals.css'
+import { Toolbar } from '@/components/ui/toolbar/Toolbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,13 +32,9 @@ export default function RootLayout({
 
             <ThermalManagerContextProvider>
 
-              <Navbar
-                brandContent={<Link href="/" color="foreground" className="font-bold hover:text-primary">LabIR Edu Mikroklima</Link>}
-                endContent={<>
-                  <Link href="https://github.com/moichim/mikroklima" isBlock color="primary" isExternal showAnchorIcon size='sm' className="hidden md:flex">Github</Link>
-                  {/* <Link href="" isBlock color="primary" isExternal showAnchorIcon size='sm'>Discord</Link> */}
-                </>}
-                links={[
+              <Toolbar
+                label={<Link href="/" color="foreground" className="font-bold hover:text-primary">LabIR Edu Mikroklima</Link>}
+                menu={[
                   {
                     text: "Týmy",
                     href: "/about/teams",

@@ -57,7 +57,7 @@ export const GraphInstanceNew: React.FC<GraphInstanceNewProps> = props => {
                 />
             </div>
 
-            <div className="w-full lg:w-1/3 md:pl-4">
+            <div className="w-full lg:w-1/3 px-4">
                 {props.timeState.hasSelection === true
                     ? <Statistics
                         data={props.selectionStats}

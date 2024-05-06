@@ -1,11 +1,10 @@
 "use client";
 
-import { useGraphContext } from "@/modules/graph/graphContext"
-import { StackActions } from "@/modules/graph/reducerInternals/actions"
-import { GraphToolType, graphTools } from "@/modules/graph/data/tools"
-import { Button, Tooltip, cn } from "@nextui-org/react"
-import React, { useCallback, useMemo } from "react"
-import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
+import { GraphToolType, graphTools } from "@/modules/graph/data/tools";
+import { useGraphContext } from "@/modules/graph/graphContext";
+import { StackActions } from "@/modules/graph/reducerInternals/actions";
+import { Button, Tooltip } from "@nextui-org/react";
+import React, { useCallback, useMemo } from "react";
 
 
 const Tool: React.FC<GraphToolType> = props => {
@@ -54,7 +53,7 @@ type ToolbarProps = React.PropsWithChildren & {
     hasZoom?: boolean
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({
+export const ToolsToolbar: React.FC<ToolbarProps> = ({
     hasZoom = true,
     ...props
 }) => {
@@ -72,7 +71,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
     }, [ hasZoom ] );
 
-    return <div className="flex flex-col gap-1">
+    return <div className="flex flex-col gap-1 z-[999]">
         {Object.values(objects).map(tool => <Tool
             key={tool.name}
             {...tool}
